@@ -1,0 +1,19 @@
+﻿**/obj/
+**/bin/
+
+**/appsettings.json
+#**/appsettings.Development.json
+
+# Editor directories and files
+.vscode
+.vs
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+.containers
+.files
