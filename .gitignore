@@ -2,7 +2,8 @@
 **/bin/
 
 **/appsettings.json
-#**/appsettings.Development.json
+**/appsettings.Development.json
+**/PasswordHasherService.cs
 
 # Editor directories and files
 .vscode
