@@ -6,4 +6,25 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Dapper" Version="2.1.35" />
+      <PackageReference Include="dotenv.net" Version="3.2.0" />
+      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.2" />
+      <PackageReference Include="MediatR" Version="12.3.0" />
+      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
+      <PackageReference Include="Serilog.AspNetCore" Version="8.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Abstractions\Caching\" />
+      <Folder Include="Attendances\" />
+      <Folder Include="CourseHours\" />
+      <Folder Include="Courses\" />
+      <Folder Include="Groups\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\SkipSmart.Domain\SkipSmart.Domain.csproj" />
+    </ItemGroup>
+
 </Project>

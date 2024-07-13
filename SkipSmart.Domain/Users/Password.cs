@@ -1,3 +1,3 @@
 ﻿namespace SkipSmart.Domain.Users;
 
-public record Password(string PasswordHash, string PasswordSalt);
+public record Password(string HashedPassword, string PasswordSalt);
