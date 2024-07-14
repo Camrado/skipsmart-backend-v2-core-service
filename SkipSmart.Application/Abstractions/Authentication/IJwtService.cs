@@ -1,7 +1,8 @@
-﻿using SkipSmart.Domain.Users;
+﻿using SkipSmart.Domain.Abstractions;
+using SkipSmart.Domain.Users;
 
 namespace SkipSmart.Application.Abstractions.Authentication;
 
 public interface IJwtService {
-    string CreateToken(User user);
+    Result<string> CreateToken(User user);
 }

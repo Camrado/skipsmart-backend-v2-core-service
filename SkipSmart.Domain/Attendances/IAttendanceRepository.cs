@@ -10,4 +10,6 @@ public interface IAttendanceRepository {
     void Add(Attendance attendance);
     
     void Update(Guid id, Attendance newAttendance);
+    
+    Task DeleteByUserId(Guid userId, CancellationToken cancellationToken = default);
 }

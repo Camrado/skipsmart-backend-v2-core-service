@@ -2,6 +2,7 @@
 using SkipSmart.Application.Abstractions.Messaging;
 using SkipSmart.Application.Users.Shared;
 using SkipSmart.Domain.Abstractions;
+using SkipSmart.Domain.Shared;
 using SkipSmart.Domain.Users;
 
 namespace SkipSmart.Application.Users.RegisterUser;
@@ -46,10 +47,22 @@ public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, A
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
         
-        await _emailVerificationService.SendVerificationEmailAsync(user.Email, cancellationToken);
-        
-        var accessToken = _jwtService.CreateToken(user);
+        // TODO
+        // it does:
+        // 1. creating random verification code
+        // 2. saving it to the users table EmailVerificationCode column
+        // 3. saving current utc time to the EmailVerificationSentAt column 
+        // 4. sending email with the verification code
+        var emailResult = await _emailVerificationService.SendVerificationEmailAsync(user.Email, cancellationToken);
 
-        return new AccessTokenResponse(accessToken);
+        if (emailResult.IsFailure) {
+            return Result.Failure<AccessTokenResponse>(EmailErrors.VerificationEmailWasNotSent);
+        }
+        
+        var accessTokenResult = _jwtService.CreateToken(user);
+
+        return accessTokenResult.IsSuccess
+            ? new AccessTokenResponse(accessTokenResult.Value)
+            : Result.Failure<AccessTokenResponse>(UserErrors.JwtTokenWasNotCreated);
     }
 }

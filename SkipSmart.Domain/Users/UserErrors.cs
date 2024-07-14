@@ -10,4 +10,16 @@ public static class UserErrors {
     public static Error InvalidCredentials = new(
         "User.InvalidCredentials",
         "The provided credentials were invalid");
+    
+    public static Error InvalidEmailVerificationCode = new(
+        "User.InvalidEmailVerificationCode",
+        "The provided email verification code was invalid");
+    
+    public static Error EmailVerificationCodeExpired = new(
+        "User.EmailVerificationCodeExpired",
+        "The email verification code has expired");
+    
+    public static Error JwtTokenWasNotCreated = new(
+        "User.JwtTokenWasNotCreated",
+        "The JWT token was not created");
 }
