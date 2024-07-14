@@ -18,9 +18,7 @@
     <ItemGroup>
       <Folder Include="Abstractions\Caching\" />
       <Folder Include="Attendances\" />
-      <Folder Include="CourseHours\" />
-      <Folder Include="Courses\" />
-      <Folder Include="Groups\" />
+      <Folder Include="Statistics\" />
     </ItemGroup>
 
     <ItemGroup>
