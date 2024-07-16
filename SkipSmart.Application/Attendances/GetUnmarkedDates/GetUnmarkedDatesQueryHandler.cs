@@ -7,7 +7,7 @@ using SkipSmart.Application.Abstractions.Timetable;
 using SkipSmart.Domain.Abstractions;
 using SkipSmart.Domain.Attendances;
 
-namespace SkipSmart.Application.MarkedDates.GetUnmarkedDates;
+namespace SkipSmart.Application.Attendances.GetUnmarkedDates;
 
 internal sealed class GetUnmarkedDatesQueryHandler : IQueryHandler<GetUnmarkedDatesQuery, IReadOnlyList<DateOnly>> {
     private readonly IUserContext _userContext;

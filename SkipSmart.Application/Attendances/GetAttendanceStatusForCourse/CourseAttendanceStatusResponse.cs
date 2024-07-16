@@ -1,4 +1,4 @@
-﻿namespace SkipSmart.Application.Statistics.GetAttendanceStatusForCourse;
+﻿namespace SkipSmart.Application.Attendances.GetAttendanceStatusForCourse;
 
 public sealed class CourseAttendanceStatusResponse {
     public Guid CourseId { get; set; }

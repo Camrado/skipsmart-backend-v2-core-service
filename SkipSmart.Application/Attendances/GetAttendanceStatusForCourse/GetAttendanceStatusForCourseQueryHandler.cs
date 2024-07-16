@@ -4,7 +4,7 @@ using SkipSmart.Application.Abstractions.Data;
 using SkipSmart.Application.Abstractions.Messaging;
 using SkipSmart.Domain.Abstractions;
 
-namespace SkipSmart.Application.Statistics.GetAttendanceStatusForCourse;
+namespace SkipSmart.Application.Attendances.GetAttendanceStatusForCourse;
 
 internal sealed class GetAttendanceStatusForCourseQueryHandler
     : IQueryHandler<GetAttendanceStatusForCourseQuery, CourseAttendanceStatusResponse> 

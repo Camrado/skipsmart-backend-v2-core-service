@@ -1,5 +1,5 @@
 ﻿using SkipSmart.Application.Abstractions.Messaging;
 
-namespace SkipSmart.Application.MarkedDates.GetUnmarkedDates;
+namespace SkipSmart.Application.Attendances.GetUnmarkedDates;
 
 public sealed record GetUnmarkedDatesQuery() : IQuery<IReadOnlyList<DateOnly>>;
