@@ -1,20 +1,21 @@
 ﻿using SkipSmart.Application.Abstractions.Authentication;
 using SkipSmart.Application.Abstractions.Messaging;
+using SkipSmart.Application.Users.ChangeGroup;
 using SkipSmart.Domain.Abstractions;
 using SkipSmart.Domain.Attendances;
 using SkipSmart.Domain.Groups;
 using SkipSmart.Domain.Users;
 
-namespace SkipSmart.Application.Users.ChangeGroup;
+namespace SkipSmart.Application.Users.ChangeSubgroup;
 
-internal sealed class ChangeGroupCommandHandler : ICommandHandler<ChangeGroupCommand, Result> {
+internal sealed class ChangeSubgroupCommandHandler : ICommandHandler<ChangeSubgroupCommand, Result> {
     private readonly IAttendanceRepository _attendanceRepository;
     private readonly IUserRepository _userRepository;
     private readonly IGroupRepository _groupRepository;
     private readonly IUserContext _userContext;
     private readonly IUnitOfWork _unitOfWork;
     
-    public ChangeGroupCommandHandler(
+    public ChangeSubgroupCommandHandler(
         IAttendanceRepository attendanceRepository,
         IUserRepository userRepository,
         IGroupRepository groupRepository,
@@ -28,16 +29,10 @@ internal sealed class ChangeGroupCommandHandler : ICommandHandler<ChangeGroupCom
         _unitOfWork = unitOfWork;
     }
     
-    public async Task<Result<Result>> Handle(ChangeGroupCommand request, CancellationToken cancellationToken) {
-        var newGroup = await _groupRepository.GetByIdAsync(request.NewGroupId, cancellationToken);
-
-        if (newGroup is null) {
-            return Result.Failure(GroupErrors.NotFound);
-        }
-        
+    public async Task<Result<Result>> Handle(ChangeSubgroupCommand request, CancellationToken cancellationToken) {
         var user = await _userRepository.GetByIdAsync(_userContext.UserId, cancellationToken);
         
-        user.ChangeGroup(newGroup.Id);
+        user.ChangeSubgroup(request.NewSubgroup);
         _attendanceRepository.DeleteByUserId(user.Id, cancellationToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);

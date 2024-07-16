@@ -3,4 +3,4 @@ using SkipSmart.Domain.Abstractions;
 
 namespace SkipSmart.Application.Users.ChangeGroup;
 
-public sealed record ChangeGroupCommand(string NewGroupName) : ICommand<Result>;
+public sealed record ChangeGroupCommand(Guid NewGroupId) : ICommand<Result>;

@@ -13,5 +13,5 @@ public interface IAttendanceRepository {
     
     void Update(Guid id, Attendance newAttendance);
     
-    Task DeleteByUserId(Guid userId, CancellationToken cancellationToken = default);
+    void DeleteByUserId(Guid userId, CancellationToken cancellationToken = default);
 }

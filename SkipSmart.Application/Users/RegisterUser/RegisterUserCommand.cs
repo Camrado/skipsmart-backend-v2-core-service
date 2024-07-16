@@ -7,5 +7,6 @@ public sealed record RegisterUserCommand(
     string Email,
     string FirstName,
     string LastName,
+    int Subgroup,
     string Password,
     Guid GroupId) : ICommand<AccessTokenResponse>;
