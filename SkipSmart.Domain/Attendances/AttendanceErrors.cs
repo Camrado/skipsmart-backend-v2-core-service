@@ -10,4 +10,8 @@ public static class AttendanceErrors {
     public static Error CouldNotRetrieveTimetable = new(
         "Attendance.CouldNotRetrieveTimetable",
         "Could not retrieve the timetable for the specified date");
+    
+    public static Error CouldNotRetrieveWorkingDaysForDateRange = new(
+        "Attendance.CouldNotRetrieveWorkingDaysForDateRange",
+        "Could not retrieve the working days for the specified date range");
 }

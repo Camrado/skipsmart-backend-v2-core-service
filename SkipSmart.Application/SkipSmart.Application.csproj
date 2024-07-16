@@ -17,7 +17,6 @@
 
     <ItemGroup>
       <Folder Include="Abstractions\Caching\" />
-      <Folder Include="MarkedDates\GetUnmarkedDates\" />
     </ItemGroup>
 
     <ItemGroup>

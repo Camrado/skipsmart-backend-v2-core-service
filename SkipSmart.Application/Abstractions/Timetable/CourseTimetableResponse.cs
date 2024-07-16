@@ -5,10 +5,6 @@ public class CourseTimetableResponse {
     
     public DateOnly TimetableDate { get; set; }
     
-    public DateTime StartTime { get; set; }
-    
-    public DateTime EndTime { get; set; }
-    
     public string CourseName { get; set; }
     
     public int Subgroup { get; set; }

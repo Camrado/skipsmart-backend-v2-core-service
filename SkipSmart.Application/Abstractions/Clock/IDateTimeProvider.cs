@@ -2,4 +2,10 @@
 
 public interface IDateTimeProvider {
     DateTime UtcNow { get; }
+    
+    DateOnly TodayInBaku { get; }
+    
+    DateTime DateInBaku { get; }
+    
+    DateOnly SemesterStartDate { get; }
 }
