@@ -29,8 +29,6 @@
       <Folder Include="Authentication\" />
       <Folder Include="Caching\" />
       <Folder Include="Clock\" />
-      <Folder Include="Configurations\" />
-      <Folder Include="Data\" />
       <Folder Include="Timetable\" />
     </ItemGroup>
 
