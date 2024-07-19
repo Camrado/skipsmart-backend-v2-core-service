@@ -45,8 +45,12 @@ internal sealed class GetUnmarkedDatesQueryHandler : IQueryHandler<GetUnmarkedDa
         });
         var markedDates = markedDatesResponse.Select(data => data.MarkedDate);
         
+        var startDate = _dateTimeProvider.TodayInBaku.AddMonths(-1).AddDays(-15) > _dateTimeProvider.SemesterStartDate
+            ? _dateTimeProvider.TodayInBaku.AddMonths(-1).AddDays(-15)
+            : _dateTimeProvider.SemesterStartDate;
+        
         var workingDaysResult = await _timetableService
-            .GetWorkingDaysForRange(_userContext.UserId, _dateTimeProvider.SemesterStartDate, _dateTimeProvider.TodayInBaku.AddDays(-1));
+            .GetWorkingDaysForRange(_userContext.UserId, startDate, _dateTimeProvider.TodayInBaku.AddDays(-1));
         
         if (workingDaysResult.IsFailure) {
             return Result.Failure<IReadOnlyList<DateOnly>>(AttendanceErrors.CouldNotRetrieveWorkingDaysForDateRange);

@@ -26,9 +26,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Authentication\" />
       <Folder Include="Caching\" />
-      <Folder Include="Clock\" />
       <Folder Include="Timetable\" />
     </ItemGroup>
 

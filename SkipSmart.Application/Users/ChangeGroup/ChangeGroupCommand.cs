@@ -1,6 +1,6 @@
 ﻿using SkipSmart.Application.Abstractions.Messaging;
-using SkipSmart.Domain.Abstractions;
+using SkipSmart.Application.Users.Shared;
 
 namespace SkipSmart.Application.Users.ChangeGroup;
 
-public sealed record ChangeGroupCommand(Guid NewGroupId) : ICommand<Result>;
+public sealed record ChangeGroupCommand(Guid NewGroupId) : ICommand<AccessTokenResponse>;

@@ -16,6 +16,8 @@ public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, A
     private readonly string _pepper;
     private readonly int _iterations;
     
+    // TODO: Add PasswordHasherPepper and PasswordHasherIterations to the environment variables
+    
     public RegisterUserCommandHandler(
         IUserRepository userRepository,
         IUnitOfWork unitOfWork,
@@ -52,7 +54,7 @@ public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, A
         // it does:
         // 1. creating random verification code
         // 2. saving it to the users table EmailVerificationCode column
-        // 3. saving current utc time to the EmailVerificationSentAt column 
+        // 3. saving DateTimeProvider.UtcNow() to the EmailVerificationSentAt column 
         // 4. sending email with the verification code
         var emailResult = await _emailVerificationService.SendVerificationEmailAsync(user.Email, cancellationToken);
 

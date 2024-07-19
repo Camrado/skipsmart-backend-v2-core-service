@@ -1,5 +1,6 @@
 ﻿using SkipSmart.Application.Abstractions.Authentication;
 using SkipSmart.Application.Abstractions.Messaging;
+using SkipSmart.Application.Users.Shared;
 using SkipSmart.Domain.Abstractions;
 using SkipSmart.Domain.Attendances;
 using SkipSmart.Domain.Groups;
@@ -7,11 +8,12 @@ using SkipSmart.Domain.Users;
 
 namespace SkipSmart.Application.Users.ChangeGroup;
 
-internal sealed class ChangeGroupCommandHandler : ICommandHandler<ChangeGroupCommand, Result> {
+internal sealed class ChangeGroupCommandHandler : ICommandHandler<ChangeGroupCommand, AccessTokenResponse> {
     private readonly IAttendanceRepository _attendanceRepository;
     private readonly IUserRepository _userRepository;
     private readonly IGroupRepository _groupRepository;
     private readonly IUserContext _userContext;
+    private readonly IJwtService _jwtService;
     private readonly IUnitOfWork _unitOfWork;
     
     public ChangeGroupCommandHandler(
@@ -19,20 +21,22 @@ internal sealed class ChangeGroupCommandHandler : ICommandHandler<ChangeGroupCom
         IUserRepository userRepository,
         IGroupRepository groupRepository,
         IUserContext userContext,
+        IJwtService jwtService,
         IUnitOfWork unitOfWork) 
     {
         _attendanceRepository = attendanceRepository;
         _userRepository = userRepository;
         _groupRepository = groupRepository;
         _userContext = userContext;
+        _jwtService = jwtService;
         _unitOfWork = unitOfWork;
     }
     
-    public async Task<Result<Result>> Handle(ChangeGroupCommand request, CancellationToken cancellationToken) {
+    public async Task<Result<AccessTokenResponse>> Handle(ChangeGroupCommand request, CancellationToken cancellationToken) {
         var newGroup = await _groupRepository.GetByIdAsync(request.NewGroupId, cancellationToken);
 
         if (newGroup is null) {
-            return Result.Failure(GroupErrors.NotFound);
+            return Result.Failure<AccessTokenResponse>(GroupErrors.NotFound);
         }
         
         var user = await _userRepository.GetByIdAsync(_userContext.UserId, cancellationToken);
@@ -42,6 +46,8 @@ internal sealed class ChangeGroupCommandHandler : ICommandHandler<ChangeGroupCom
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
         
-        return Result.Success();
+        var accessToken = _jwtService.CreateToken(user);
+        
+        return new AccessTokenResponse(accessToken.Value);
     }
 }

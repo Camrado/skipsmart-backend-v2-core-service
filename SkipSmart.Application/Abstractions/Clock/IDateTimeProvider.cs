@@ -5,7 +5,7 @@ public interface IDateTimeProvider {
     
     DateOnly TodayInBaku { get; }
     
-    DateTime DateInBaku { get; }
+    DateTime DateTimeInBaku { get; }
     
     DateOnly SemesterStartDate { get; }
 }
