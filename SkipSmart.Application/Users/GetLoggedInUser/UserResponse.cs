@@ -11,5 +11,11 @@ public class UserResponse {
     
     public bool IsEmailVerified { get; init; }
     
+    public int LanguageSubgroup { get; init; }
+    
+    public int FacultySubgroup { get; init; }
+    
     public string GroupName { get; init; }
+    
+    public Guid GroupId { get; init; }
 }

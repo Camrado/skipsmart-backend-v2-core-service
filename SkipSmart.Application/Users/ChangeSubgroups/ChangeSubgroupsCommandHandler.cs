@@ -6,16 +6,16 @@ using SkipSmart.Domain.Attendances;
 using SkipSmart.Domain.Groups;
 using SkipSmart.Domain.Users;
 
-namespace SkipSmart.Application.Users.ChangeSubgroup;
+namespace SkipSmart.Application.Users.ChangeSubgroups;
 
-internal sealed class ChangeSubgroupCommandHandler : ICommandHandler<ChangeSubgroupCommand, Result> {
+internal sealed class ChangeSubgroupsCommandHandler : ICommandHandler<ChangeSubgroupsCommand, Result> {
     private readonly IAttendanceRepository _attendanceRepository;
     private readonly IUserRepository _userRepository;
     private readonly IGroupRepository _groupRepository;
     private readonly IUserContext _userContext;
     private readonly IUnitOfWork _unitOfWork;
     
-    public ChangeSubgroupCommandHandler(
+    public ChangeSubgroupsCommandHandler(
         IAttendanceRepository attendanceRepository,
         IUserRepository userRepository,
         IGroupRepository groupRepository,
@@ -29,10 +29,11 @@ internal sealed class ChangeSubgroupCommandHandler : ICommandHandler<ChangeSubgr
         _unitOfWork = unitOfWork;
     }
     
-    public async Task<Result<Result>> Handle(ChangeSubgroupCommand request, CancellationToken cancellationToken) {
+    public async Task<Result<Result>> Handle(ChangeSubgroupsCommand request, CancellationToken cancellationToken) {
         var user = await _userRepository.GetByIdAsync(_userContext.UserId, cancellationToken);
         
-        user.ChangeSubgroup(request.NewSubgroup);
+        user.ChangeLanguageSubgroup(request.NewLanguageSubgroup);
+        user.ChangeFacultySubgroup(request.NewFacultySubgroup);
         _attendanceRepository.DeleteByUserId(user.Id, cancellationToken);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);

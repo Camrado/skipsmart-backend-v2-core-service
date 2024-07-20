@@ -26,7 +26,10 @@ internal sealed class GetLoggedInUserQueryHandler : IQueryHandler<GetLoggedInUse
                                u.last_name AS LastName,
                                u.email AS Email,
                                u.is_email_verified AS IsEmailVerified,
-                               g.group_name AS GroupName
+                               u.language_subgroup AS LanguageSubgroup,
+                               u.faculty_subgroup AS FacultySubgroup,
+                               g.group_name AS GroupName,
+                               u.group_id AS GroupId
                            FROM users u
                            LEFT JOIN groups g ON u.group_id = g.id
                            WHERE u.id = @UserId

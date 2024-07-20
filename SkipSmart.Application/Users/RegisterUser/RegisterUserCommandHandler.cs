@@ -41,7 +41,8 @@ public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, A
             new FirstName(request.FirstName),
             new LastName(request.LastName),
             new Email(request.Email),
-            request.Subgroup,
+            request.LanguageSubgroup,
+            request.FacultySubgroup,
             new Password(hashedPassword, userSalt),
             request.GroupId
         );
