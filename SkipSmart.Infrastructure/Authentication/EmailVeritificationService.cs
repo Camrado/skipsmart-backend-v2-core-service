@@ -74,12 +74,6 @@ internal sealed class EmailVerificationService : IEmailVerificationService {
             border-radius: 5px;
             cursor: pointer !important;
         }}
-        .click-to-copy {{
-            text-align: center;
-            margin-top: -10px;
-            color: #999999;
-            font-size: 14px;
-        }}
         .copy-message {{
             display: none;
             color: #28a745;
@@ -103,7 +97,6 @@ internal sealed class EmailVerificationService : IEmailVerificationService {
             <h1>Welcome to SkipSmart!</h1>
             <p>Thank you for registering with us. To complete your registration, please verify your email address by using the verification code below:</p>
             <div class=""verification-code"" onclick=""copyToClipboard(this)"">{verificationCode}</div>
-            <div class=""click-to-copy"">click to copy</div>
             <div class=""copy-message"" id=""copyMessage"">Verification code copied to clipboard!</div>
             <p>If you did not register for this account, please ignore this email.</p>
         </div>
@@ -111,21 +104,6 @@ internal sealed class EmailVerificationService : IEmailVerificationService {
             <p>&copy; SkipSmart 2024. All rights reserved.</p>
         </div>
     </div>
-
-    <script>
-        function copyToClipboard(element) {{
-            const text = element.innerText;
-            navigator.clipboard.writeText(text).then(() => {{
-                const messageElement = document.getElementById('copyMessage');
-                messageElement.style.display = 'block';
-                setTimeout(() => {{
-                    messageElement.style.display = 'none';
-                }}, 2000);
-            }}).catch(err => {{
-                console.error('Failed to copy: ', err);
-            }});
-        }}
-    </script>
 </body>
 </html>
 ";

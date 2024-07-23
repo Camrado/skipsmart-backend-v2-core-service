@@ -10,4 +10,8 @@ public static class EmailErrors {
     public static Error EmailIsAlreadyVerified = new(
         "Email.EmailIsAlreadyVerified",
         "The email is already verified");
+    
+    public static Error CouldNotSendEmail = new(
+        "Email.CouldNotSendEmail",
+        "The email could not be sent");
 }
