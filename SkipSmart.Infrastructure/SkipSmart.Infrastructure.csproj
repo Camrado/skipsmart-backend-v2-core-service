@@ -27,7 +27,6 @@
 
     <ItemGroup>
       <Folder Include="Caching\" />
-      <Folder Include="Timetable\" />
     </ItemGroup>
 
 </Project>

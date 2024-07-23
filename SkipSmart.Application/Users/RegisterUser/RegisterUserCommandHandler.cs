@@ -53,11 +53,8 @@ public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, A
         
         // TODO
         // it does:
-        // 1. creating random verification code
-        // 2. saving it to the users table EmailVerificationCode column
-        // 3. saving DateTimeProvider.UtcNow() to the EmailVerificationSentAt column 
         // 4. sending email with the verification code
-        var emailResult = await _emailVerificationService.SendVerificationEmailAsync(user.Email, cancellationToken);
+        var emailResult = await _emailVerificationService.SendVerificationEmailAsync(user, cancellationToken);
 
         if (emailResult.IsFailure) {
             return Result.Failure<AccessTokenResponse>(EmailErrors.VerificationEmailWasNotSent);

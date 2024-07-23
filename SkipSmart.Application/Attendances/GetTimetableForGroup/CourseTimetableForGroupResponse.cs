@@ -5,5 +5,7 @@ public class CourseTimetableForGroupResponse {
     
     public string CourseName { get; set; }
     
-    public int Subgroup { get; set; }
+    public int FacultySubgroup { get; set; }
+    
+    public int LanguageSubgroup { get; set; }
 }

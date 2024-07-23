@@ -1,3 +1,3 @@
 ﻿namespace SkipSmart.Domain.Users;
 
-public record EmailVerificationCode(string Value);
+public record EmailVerificationCode(int Value);

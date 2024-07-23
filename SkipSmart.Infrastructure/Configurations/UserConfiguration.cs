@@ -24,7 +24,7 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User> {
         builder.Property(user => user.Email)
             .IsRequired()
             .HasMaxLength(150)
-            .HasConversion(email => email.Value, value => new Email(value));
+            .HasConversion(email => email.Value, value => new Domain.Users.Email(value));
 
         builder.Property(user => user.IsEmailVerified)
             .HasDefaultValue(false);

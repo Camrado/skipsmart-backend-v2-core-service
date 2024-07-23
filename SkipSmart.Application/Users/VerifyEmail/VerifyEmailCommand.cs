@@ -3,4 +3,4 @@ using SkipSmart.Application.Users.Shared;
 
 namespace SkipSmart.Application.Users.VerifyEmail;
 
-public sealed record VerifyEmailCommand(string EmailVerificationCode) : ICommand<AccessTokenResponse>;
+public sealed record VerifyEmailCommand(int EmailVerificationCode) : ICommand<AccessTokenResponse>;

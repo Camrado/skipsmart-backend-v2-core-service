@@ -59,4 +59,9 @@ public class User : Entity {
      public void ChangeFacultySubgroup(int newFacultySubgroup) {
          FacultySubgroup = newFacultySubgroup;
      }
+     
+     public void SetEmailVerificationCode(int code, DateTime sentAt) {
+         EmailVerificationCode = new EmailVerificationCode(code);
+         EmailVerificationSentAt = sentAt;
+     }
 }

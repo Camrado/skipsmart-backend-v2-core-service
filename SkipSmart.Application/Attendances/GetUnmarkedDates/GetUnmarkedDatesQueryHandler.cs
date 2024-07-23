@@ -50,7 +50,7 @@ internal sealed class GetUnmarkedDatesQueryHandler : IQueryHandler<GetUnmarkedDa
             : _dateTimeProvider.SemesterStartDate;
         
         var workingDaysResult = await _timetableService
-            .GetWorkingDaysForRange(_userContext.UserId, startDate, _dateTimeProvider.TodayInBaku.AddDays(-1));
+            .GetWorkingDaysForRange(_userContext.UserId, startDate, _dateTimeProvider.TodayInBaku.AddDays(-1), cancellationToken);
         
         if (workingDaysResult.IsFailure) {
             return Result.Failure<IReadOnlyList<DateOnly>>(AttendanceErrors.CouldNotRetrieveWorkingDaysForDateRange);

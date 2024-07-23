@@ -17,19 +17,12 @@ internal sealed class GetTimetableForGroupQueryHandler : IQueryHandler<GetTimeta
     
     public async Task<Result<IReadOnlyList<CourseTimetableForGroupResponse>>> Handle(GetTimetableForGroupQuery request, CancellationToken cancellationToken) {
         var timetableResult = await _timetableService
-            .GetTimetableForDate(_userContext.GroupId, request.TimetableDate);
+            .GetTimetableForDate(_userContext.GroupId, request.TimetableDate, cancellationToken);
 
         if (timetableResult.IsFailure) {
             return Result.Failure<IReadOnlyList<CourseTimetableForGroupResponse>>(AttendanceErrors.CouldNotRetrieveTimetable);
         }
-        
-        var formattedTimetable = timetableResult.Value
-            .Select(courseTimetable => new CourseTimetableForGroupResponse {
-                Period = courseTimetable.Period,
-                CourseName = courseTimetable.CourseName,
-                Subgroup = courseTimetable.Subgroup
-            }).ToList();
 
-        return formattedTimetable;
+        return timetableResult;
     }
 }

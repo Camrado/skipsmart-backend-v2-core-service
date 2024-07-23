@@ -4,10 +4,13 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using SkipSmart.Application.Abstractions.Authentication;
 using SkipSmart.Application.Abstractions.Clock;
 using SkipSmart.Application.Abstractions.Data;
+using SkipSmart.Application.Abstractions.Email;
+using SkipSmart.Application.Abstractions.Timetable;
 using SkipSmart.Domain.Attendances;
 using SkipSmart.Domain.CourseHours;
 using SkipSmart.Domain.Courses;
@@ -17,17 +20,23 @@ using SkipSmart.Domain.Users;
 using SkipSmart.Infrastructure.Authentication;
 using SkipSmart.Infrastructure.Clock;
 using SkipSmart.Infrastructure.Data;
+using SkipSmart.Infrastructure.Email;
 using SkipSmart.Infrastructure.Repositories;
+using SkipSmart.Infrastructure.Timetable;
 
 namespace SkipSmart.Infrastructure;
 
 public static class DependencyInjection {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration) {
         services.AddTransient<IDateTimeProvider, DateTimeProvider>();
+
+        services.AddTransient<IEmailService, EmailService>();
         
         AddPersistence(services, configuration);
         
         AddAuthentication(services, configuration);
+        
+        AddTimetable(services, configuration);
         
         return services;
     }
@@ -82,5 +91,17 @@ public static class DependencyInjection {
         services.AddHttpContextAccessor();
         
         services.AddScoped<IUserContext, UserContext>();
+
+        services.AddTransient<IEmailVerificationService, EmailVerificationService>();
+    }
+
+    private static void AddTimetable(IServiceCollection services, IConfiguration configuration) {
+        services.Configure<TimetableOptions>(configuration.GetSection("Timetable"));
+        
+        services.AddHttpClient<ITimetableService, TimetableService>((serviceProvider, httpClient) => {
+            var timetableOptions = serviceProvider.GetRequiredService<IOptions<TimetableOptions>>().Value;
+
+            httpClient.BaseAddress = new Uri(timetableOptions.BaseUrl);
+        });
     }
 }

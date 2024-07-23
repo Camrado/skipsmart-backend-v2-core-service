@@ -1,7 +1,8 @@
 ﻿using SkipSmart.Domain.Abstractions;
+using SkipSmart.Domain.Users;
 
 namespace SkipSmart.Application.Abstractions.Authentication;
 
 public interface IEmailVerificationService {
-    Task<Result> SendVerificationEmailAsync(Domain.Users.Email recipientEmail, CancellationToken cancellationToken = default);
+    Task<Result> SendVerificationEmailAsync(User user, CancellationToken cancellationToken = default);
 }

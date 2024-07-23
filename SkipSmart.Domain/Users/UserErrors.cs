@@ -22,4 +22,8 @@ public static class UserErrors {
     public static Error JwtTokenWasNotCreated = new(
         "User.JwtTokenWasNotCreated",
         "The JWT token was not created");
+    
+    public static Error CouldNotSendVerificationEmail = new(
+        "User.CouldNotSendVerificationEmail",
+        "The verification email could not be sent");
 }

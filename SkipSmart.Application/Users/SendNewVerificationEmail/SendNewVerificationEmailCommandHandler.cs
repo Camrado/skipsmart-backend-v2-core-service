@@ -9,10 +9,12 @@ namespace SkipSmart.Application.Users.SendNewVerificationEmail;
 internal sealed class SendNewVerificationEmailCommandHandler : ICommandHandler<SendNewVerificationEmailCommand, Result> {
     private readonly IEmailVerificationService _emailVerificationService;
     private readonly IUserContext _userContext;
+    private readonly IUserRepository _userRepository;
     
-    public SendNewVerificationEmailCommandHandler(IEmailVerificationService emailVerificationService, IUserContext userContext) {
+    public SendNewVerificationEmailCommandHandler(IEmailVerificationService emailVerificationService, IUserContext userContext, IUserRepository userRepository) {
         _emailVerificationService = emailVerificationService;
         _userContext = userContext;
+        _userRepository = userRepository;
     }
     
     public async Task<Result<Result>> Handle(SendNewVerificationEmailCommand request, CancellationToken cancellationToken) {
@@ -22,8 +24,10 @@ internal sealed class SendNewVerificationEmailCommandHandler : ICommandHandler<S
             return Result.Failure(EmailErrors.EmailIsAlreadyVerified);
         }
         
+        var user = await _userRepository.GetByIdAsync(_userContext.UserId, cancellationToken);
+        
         var emailResult = await _emailVerificationService
-            .SendVerificationEmailAsync(new Email(_userContext.Email), cancellationToken);
+            .SendVerificationEmailAsync(user, cancellationToken);
 
         return emailResult.IsSuccess
             ? Result.Success()
