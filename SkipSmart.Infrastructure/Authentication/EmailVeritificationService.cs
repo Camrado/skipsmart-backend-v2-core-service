@@ -21,6 +21,8 @@ internal sealed class EmailVerificationService : IEmailVerificationService {
         int verificationCode = new Random().Next(100_000, 1_000_000);
         DateTime sentAt = _dateTimeProvider.UtcNow;
         
+        string formattedVerificationCode = verificationCode.ToString().Insert(3, "-");
+        
         user.SetEmailVerificationCode(verificationCode, sentAt);
 
         string message = $@"
@@ -96,7 +98,7 @@ internal sealed class EmailVerificationService : IEmailVerificationService {
         <div class=""content"">
             <h1>Welcome to SkipSmart!</h1>
             <p>Thank you for registering with us. To complete your registration, please verify your email address by using the verification code below:</p>
-            <div class=""verification-code"" onclick=""copyToClipboard(this)"">{verificationCode}</div>
+            <div class=""verification-code"" onclick=""copyToClipboard(this)"">{formattedVerificationCode}</div>
             <div class=""copy-message"" id=""copyMessage"">Verification code copied to clipboard!</div>
             <p>If you did not register for this account, please ignore this email.</p>
         </div>
