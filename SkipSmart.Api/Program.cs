@@ -1,6 +1,7 @@
 using dotenv.net;
 using Serilog;
 using SkipSmart.Api.Extensions;
+using SkipSmart.Api.JsonConverters;
 using SkipSmart.Application;
 using SkipSmart.Infrastructure;
 
@@ -11,7 +12,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((context, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration));
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options => {
+        options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
+    });
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

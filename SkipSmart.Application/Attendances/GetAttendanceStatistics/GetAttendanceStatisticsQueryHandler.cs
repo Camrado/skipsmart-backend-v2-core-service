@@ -4,20 +4,20 @@ using SkipSmart.Application.Abstractions.Data;
 using SkipSmart.Application.Abstractions.Messaging;
 using SkipSmart.Domain.Abstractions;
 
-namespace SkipSmart.Application.Attendances.GetAttendanceStatusForCourse;
+namespace SkipSmart.Application.Attendances.GetAttendanceStatistics;
 
-internal sealed class GetAttendanceStatusForCourseQueryHandler
-    : IQueryHandler<GetAttendanceStatusForCourseQuery, CourseAttendanceStatusResponse> 
+internal sealed class GetAttendanceStatisticsQueryHandler
+    : IQueryHandler<GetAttendanceStatisticsQuery, CourseAttendanceStatisticsResponse> 
 {
     private readonly ISqlConnectionFactory _sqlConnectionFactory;
     private readonly IUserContext _userContext;
     
-    public GetAttendanceStatusForCourseQueryHandler(ISqlConnectionFactory sqlConnectionFactory, IUserContext userContext) {
+    public GetAttendanceStatisticsQueryHandler(ISqlConnectionFactory sqlConnectionFactory, IUserContext userContext) {
         _sqlConnectionFactory = sqlConnectionFactory;
         _userContext = userContext;
     }
     
-    public async Task<Result<CourseAttendanceStatusResponse>> Handle(GetAttendanceStatusForCourseQuery request, CancellationToken cancellationToken) {
+    public async Task<Result<CourseAttendanceStatisticsResponse>> Handle(GetAttendanceStatisticsQuery request, CancellationToken cancellationToken) {
         using var connection = _sqlConnectionFactory.CreateConnection();
         
         var sql = """
@@ -40,7 +40,7 @@ internal sealed class GetAttendanceStatusForCourseQueryHandler
                       c.hours
                   """;
 
-        var courseAttendanceStatus = await connection.QueryFirstOrDefaultAsync<CourseAttendanceStatusResponse>(sql, 
+        var courseAttendanceStatus = await connection.QueryFirstOrDefaultAsync<CourseAttendanceStatisticsResponse>(sql, 
             new {
                 request.CourseId,
                 _userContext.UserId
