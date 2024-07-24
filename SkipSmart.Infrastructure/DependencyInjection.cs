@@ -78,7 +78,7 @@ public static class DependencyInjection {
                     ValidIssuer = configuration["Authentication:Issuer"],
                     ValidAudience = configuration["Authentication:Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
-                        .GetBytes(Environment.GetEnvironmentVariable("JwtSecret") 
+                        .GetBytes(Environment.GetEnvironmentVariable("JWT_SECRET") 
                                   ?? throw new ApplicationException("Jwt secret is missing."))),
                     
                     ValidateIssuer = true,
