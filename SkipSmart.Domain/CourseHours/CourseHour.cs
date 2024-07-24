@@ -11,4 +11,7 @@ public class CourseHour : Entity {
         Hours = hours;
         CourseId = courseId;
     }
+    
+    private CourseHour() {
+    }
 }

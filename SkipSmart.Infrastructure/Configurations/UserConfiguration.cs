@@ -31,10 +31,8 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User> {
 
         builder.Property(user => user.EmailVerificationCode)
             .IsRequired(false)
-            .HasMaxLength(6);
-
-        builder.Property(user => user.EmailVerificationSentAt)
-            .IsRequired(false);
+            .HasMaxLength(6)
+            .HasConversion(emailVerificationCode => emailVerificationCode.Value, value => new EmailVerificationCode(value));
 
         builder.Property(user => user.LanguageSubgroup)
             .IsRequired();

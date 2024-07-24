@@ -19,8 +19,8 @@ internal sealed class JwtService : IJwtService {
     // TODO: Add support for that exact .env file
 
     public JwtService(IOptions<AuthenticationOptions> authenticationOptions) {
-        _secret = Environment.GetEnvironmentVariable("JwtSecret") ?? throw new ApplicationException("Jwt secret is missing.");
-        _tokenLifeTime = int.Parse(Environment.GetEnvironmentVariable("JwtTokenLifeTime") ?? throw new ApplicationException("Jwt token lifetime is missing."));
+        _secret = Environment.GetEnvironmentVariable("JWT_SECRET") ?? throw new ApplicationException("Jwt secret is missing.");
+        _tokenLifeTime = int.Parse(Environment.GetEnvironmentVariable("JWT_TOKEN_LIFETIME") ?? throw new ApplicationException("Jwt token lifetime is missing."));
         _authenticationOptions = authenticationOptions.Value;
     }
     

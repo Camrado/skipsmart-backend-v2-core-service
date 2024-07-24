@@ -12,6 +12,9 @@ public class MarkedDate : Entity {
         UserId = userId;
     }
     
+    private MarkedDate() {
+    }
+    
     public static MarkedDate Create(DateOnly recordedDate, Guid userId) {
         return new(Guid.NewGuid(), recordedDate, userId);
     }

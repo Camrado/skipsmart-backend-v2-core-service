@@ -18,6 +18,9 @@ public class Attendance : Entity {
         Period = period;
     }
     
+    private Attendance() {
+    }
+    
     public static Attendance Create(Guid courseId, Guid userId, bool hasAttended, DateOnly attendanceDate, Period period) {
         return new(Guid.NewGuid(), courseId, userId, hasAttended, attendanceDate, period);
     }

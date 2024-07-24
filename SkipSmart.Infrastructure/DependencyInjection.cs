@@ -11,6 +11,7 @@ using SkipSmart.Application.Abstractions.Clock;
 using SkipSmart.Application.Abstractions.Data;
 using SkipSmart.Application.Abstractions.Email;
 using SkipSmart.Application.Abstractions.Timetable;
+using SkipSmart.Domain.Abstractions;
 using SkipSmart.Domain.Attendances;
 using SkipSmart.Domain.CourseHours;
 using SkipSmart.Domain.Courses;
@@ -32,7 +33,7 @@ public static class DependencyInjection {
 
         services.AddTransient<IEmailService, EmailService>();
         
-        AddPersistence(services, configuration);
+        AddPersistence(services);
         
         AddAuthentication(services, configuration);
         
@@ -41,9 +42,10 @@ public static class DependencyInjection {
         return services;
     }
     
-    private static void AddPersistence(IServiceCollection services, IConfiguration configuration) {
-        var connectionString = configuration.GetConnectionString("Database") ??
-                               throw new ArgumentNullException(nameof(configuration));
+    private static void AddPersistence(IServiceCollection services) {
+        // TODO: Add database connection string to .env file
+        var connectionString = Environment.GetEnvironmentVariable("DATABASE_CONNECTION_STRING") ??
+                               throw new ApplicationException("Database connection string is missing.");
 
         services.AddDbContext<ApplicationDbContext>(options => {
             options.UseNpgsql(connectionString).UseSnakeCaseNamingConvention();
@@ -60,6 +62,8 @@ public static class DependencyInjection {
         services.AddScoped<IGroupRepository, GroupRepository>();
 
         services.AddScoped<IMarkedDateRepository, MarkedDateRepository>();
+        
+        services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<ApplicationDbContext>());
 
         services.AddSingleton<ISqlConnectionFactory>(_ => new SqlConnectionFactory(connectionString));
 

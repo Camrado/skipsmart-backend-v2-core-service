@@ -10,4 +10,7 @@ public class Group : Entity {
         GroupName = groupName;
         EdupageClassId = edupageClassId;
     }
+    
+    private Group() {
+    }
 }

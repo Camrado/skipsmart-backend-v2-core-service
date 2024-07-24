@@ -39,7 +39,7 @@ internal sealed class EmailService : IEmailService {
             await client.DisconnectAsync(true);
 
             return Result.Success();
-        } catch (Exception ex) {
+        } catch {
             return Result.Failure(EmailErrors.CouldNotSendEmail);
         }
     }

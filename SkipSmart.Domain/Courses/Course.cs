@@ -13,4 +13,7 @@ public class Course : Entity {
         Semester = semester;
         GroupId = groupId;
     }
+
+    private Course() {
+    }
 }

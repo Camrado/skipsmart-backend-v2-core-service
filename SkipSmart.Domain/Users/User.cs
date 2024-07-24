@@ -32,6 +32,9 @@ public class User : Entity {
          IsEmailVerified = isEmailVerified;
      }
      
+     private User() {
+     }
+     
      public static User Create(FirstName firstName, LastName lastName, Email email, int languageSubgroup, int facultySubgroup, Password password, Guid groupId) {
          var user = new User(Guid.NewGuid(), firstName, lastName, email, languageSubgroup, facultySubgroup, false, password, groupId);
          

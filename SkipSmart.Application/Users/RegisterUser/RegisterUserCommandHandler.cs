@@ -16,8 +16,6 @@ public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, A
     private readonly string _pepper;
     private readonly int _iterations;
     
-    // TODO: Add PasswordHasherPepper and PasswordHasherIterations to the environment variables
-    
     public RegisterUserCommandHandler(
         IUserRepository userRepository,
         IUnitOfWork unitOfWork,
@@ -29,8 +27,8 @@ public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, A
         _emailVerificationService = emailVerificationService;
         _jwtService = jwtService;
         _passwordHasherService = passwordHasherService;
-        _pepper = Environment.GetEnvironmentVariable("PasswordHasherPepper")!;
-        _iterations = Convert.ToInt32(Environment.GetEnvironmentVariable("PasswordHasherIterations")!);
+        _pepper = Environment.GetEnvironmentVariable("PASSWORD_HASHER_PEPPER")!;
+        _iterations = Convert.ToInt32(Environment.GetEnvironmentVariable("PASSWORD_HASHER_ITERATIONS")!);
     }
     
     public async Task<Result<AccessTokenResponse>> Handle(RegisterUserCommand request, CancellationToken cancellationToken) {
@@ -51,9 +49,6 @@ public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, A
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
         
-        // TODO
-        // it does:
-        // 4. sending email with the verification code
         var emailResult = await _emailVerificationService.SendVerificationEmailAsync(user, cancellationToken);
 
         if (emailResult.IsFailure) {
