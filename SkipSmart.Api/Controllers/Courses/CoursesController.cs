@@ -14,10 +14,10 @@ public class CoursesController : ControllerBase {
         _sender = sender;
     }
     
-    [AllowAnonymous]
-    [HttpGet("for-group/{groupId:guid}")]
-    public async Task<IActionResult> GetCoursesForGroup([FromRoute] Guid groupId, CancellationToken cancellationToken) {
-        var query = new GetCoursesForGroupQuery(groupId);
+    [Authorize]
+    [HttpGet("all")]
+    public async Task<IActionResult> GetCoursesForGroup(CancellationToken cancellationToken) {
+        var query = new GetCoursesForGroupQuery();
         
         var result = await _sender.Send(query, cancellationToken);
         

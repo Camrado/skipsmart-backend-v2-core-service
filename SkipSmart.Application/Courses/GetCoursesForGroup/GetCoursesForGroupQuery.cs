@@ -2,4 +2,4 @@
 
 namespace SkipSmart.Application.Courses.GetCoursesForGroup;
 
-public sealed record GetCoursesForGroupQuery(Guid GroupId) : IQuery<IReadOnlyList<CourseResponse>>;
+public sealed record GetCoursesForGroupQuery() : IQuery<IReadOnlyList<CourseResponse>>;
