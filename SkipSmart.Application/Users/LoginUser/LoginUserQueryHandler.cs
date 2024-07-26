@@ -17,8 +17,10 @@ internal sealed class LoginUserQueryHandler : IQueryHandler<LoginUserQuery, Acce
         _jwtService = jwtService;
         _userRepository = userRepository;
         _passwordHasherService = passwordHasherService;
-        _pepper = Environment.GetEnvironmentVariable("PasswordHasherPepper")!;
-        _iterations = Convert.ToInt32(Environment.GetEnvironmentVariable("PasswordHasherIterations")!);
+        _pepper = Environment.GetEnvironmentVariable("PASSWORD_HASHER_PEPPER") ??
+                  throw new ApplicationException("Password hasher pepper is missing.");
+        _iterations = Convert.ToInt32(Environment.GetEnvironmentVariable("PASSWORD_HASHER_ITERATIONS") ??
+                                      throw new ApplicationException("Password hasher iterations are missing."));
     }
     
     public async Task<Result<AccessTokenResponse>> Handle(LoginUserQuery request, CancellationToken cancellationToken) {

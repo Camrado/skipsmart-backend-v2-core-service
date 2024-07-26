@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using Dapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +20,7 @@ using SkipSmart.Domain.Groups;
 using SkipSmart.Domain.MarkedDates;
 using SkipSmart.Domain.Users;
 using SkipSmart.Infrastructure.Authentication;
+using SkipSmart.Infrastructure.Authorization;
 using SkipSmart.Infrastructure.Clock;
 using SkipSmart.Infrastructure.Data;
 using SkipSmart.Infrastructure.Email;
@@ -36,6 +38,8 @@ public static class DependencyInjection {
         AddPersistence(services);
         
         AddAuthentication(services, configuration);
+        
+        AddAuthorization(services);
         
         AddTimetable(services, configuration);
         
@@ -97,6 +101,15 @@ public static class DependencyInjection {
         services.AddScoped<IUserContext, UserContext>();
 
         services.AddTransient<IEmailVerificationService, EmailVerificationService>();
+    }
+
+    private static void AddAuthorization(IServiceCollection services) {
+        services.AddAuthorization(options => {
+            options.AddPolicy("EmailVerified", policy =>
+                policy.Requirements.Add(new EmailVerifiedRequirement()));
+        });
+        
+        services.AddSingleton<IAuthorizationHandler, EmailVerifiedHandler>();
     }
 
     private static void AddTimetable(IServiceCollection services, IConfiguration configuration) {

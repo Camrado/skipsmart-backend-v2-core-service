@@ -89,7 +89,7 @@ public class UsersController : ControllerBase {
         return Ok(result.Value);
     }
     
-    [Authorize]
+    [Authorize(Policy = "EmailVerified")]
     [HttpPatch("change-group")]
     public async Task<IActionResult> ChangeGroup([FromBody] ChangeGroupRequest request, CancellationToken cancellationToken) {
         var command = new ChangeGroupCommand(request.NewGroupId);
@@ -103,7 +103,7 @@ public class UsersController : ControllerBase {
         return Ok(result.Value);
     }
     
-    [Authorize]
+    [Authorize(Policy = "EmailVerified")]
     [HttpPatch("change-subgroups")]
     public async Task<IActionResult> ChangeSubGroups([FromBody] ChangeSubgroupsRequest request, CancellationToken cancellationToken) {
         var command = new ChangeSubgroupsCommand(request.NewLanguageSubgroup, request.NewFacultySubgroup);

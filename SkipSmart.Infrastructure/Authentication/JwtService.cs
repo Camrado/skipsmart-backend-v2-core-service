@@ -6,7 +6,6 @@ using Microsoft.IdentityModel.Tokens;
 using SkipSmart.Application.Abstractions.Authentication;
 using SkipSmart.Domain.Abstractions;
 using SkipSmart.Domain.Users;
-using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
 
 namespace SkipSmart.Infrastructure.Authentication;
 
@@ -29,8 +28,8 @@ internal sealed class JwtService : IJwtService {
         var key = Encoding.UTF8.GetBytes(_secret);
 
         var claims = new List<Claim> {
-            new(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-            new(JwtRegisteredClaimNames.Email, user.Email.Value),
+            new("user_id", user.Id.ToString()),
+            new("user_email", user.Email.Value),
             new("email_verified", user.IsEmailVerified.ToString().ToLower()),
             new("group_id", user.GroupId.ToString())
         };

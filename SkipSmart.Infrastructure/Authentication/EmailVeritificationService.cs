@@ -21,8 +21,6 @@ internal sealed class EmailVerificationService : IEmailVerificationService {
         int verificationCode = new Random().Next(100_000, 1_000_000);
         DateTime sentAt = _dateTimeProvider.UtcNow;
         
-        string formattedVerificationCode = verificationCode.ToString().Insert(3, "-");
-        
         user.SetEmailVerificationCode(verificationCode, sentAt);
 
         string message = $@"
@@ -33,18 +31,34 @@ internal sealed class EmailVerificationService : IEmailVerificationService {
     <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"">
     <title>Verify Your Email</title>
     <style>
+        /* CSS reset for email */
+        body, table, td, a {{
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }}
+        table, td {{
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }}
+        img {{
+            -ms-interpolation-mode: bicubic;
+        }}
         body {{
             font-family: Arial, sans-serif;
             background-color: #f7f7f7;
             margin: 0;
             padding: 0;
+            width: 100%;
+            height: 100%;
+            -webkit-text-size-adjust: none;
+            -ms-text-size-adjust: none;
         }}
         .container {{
             width: 100%;
             max-width: 600px;
             margin: 0 auto;
             background-color: #ffffff;
-            padding: 20px;
+            padding: 0 10px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }}
@@ -53,7 +67,7 @@ internal sealed class EmailVerificationService : IEmailVerificationService {
             padding: 10px 0;
         }}
         .header img {{
-            max-width: 150px;
+            max-width: 150px !important;
         }}
         .content {{
             text-align: center;
@@ -98,7 +112,7 @@ internal sealed class EmailVerificationService : IEmailVerificationService {
         <div class=""content"">
             <h1>Welcome to SkipSmart!</h1>
             <p>Thank you for registering with us. To complete your registration, please verify your email address by using the verification code below:</p>
-            <div class=""verification-code"" onclick=""copyToClipboard(this)"">{formattedVerificationCode}</div>
+            <div class=""verification-code"" onclick=""copyToClipboard(this)"">{verificationCode}</div>
             <div class=""copy-message"" id=""copyMessage"">Verification code copied to clipboard!</div>
             <p>If you did not register for this account, please ignore this email.</p>
         </div>

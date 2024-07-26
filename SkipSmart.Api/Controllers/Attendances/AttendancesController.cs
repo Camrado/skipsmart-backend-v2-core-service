@@ -18,7 +18,7 @@ public class AttendancesController : ControllerBase {
         _sender = sender;
     }
     
-    [Authorize]
+    [Authorize(Policy = "EmailVerified")]
     [HttpGet("{date}")]
     public async Task<IActionResult> GetAttendancesForDate([FromRoute] string date, CancellationToken cancellationToken) {
         if (!DateOnly.TryParse(date, out var parsedDate)) {
@@ -36,7 +36,7 @@ public class AttendancesController : ControllerBase {
         return Ok(result.Value);
     }
     
-    [Authorize]
+    [Authorize(Policy = "EmailVerified")]
     [HttpGet("statistics")]
     public async Task<IActionResult> GetAttendanceStatistics([FromQuery] Guid courseId, CancellationToken cancellationToken) {
         var query = new GetAttendanceStatisticsQuery(courseId);
@@ -50,7 +50,7 @@ public class AttendancesController : ControllerBase {
         return Ok(result.Value);
     }
     
-    [Authorize]
+    [Authorize(Policy = "EmailVerified")]
     [HttpGet("timetable/{date}")]
     public async Task<IActionResult> GetTimetable([FromRoute] string date, CancellationToken cancellationToken) {
         if (!DateOnly.TryParse(date, out var parsedDate)) {
@@ -68,7 +68,7 @@ public class AttendancesController : ControllerBase {
         return Ok(result.Value);
     }
     
-    [Authorize]
+    [Authorize(Policy = "EmailVerified")]
     [HttpGet("unmarked-dates")]
     public async Task<IActionResult> GetUnmarkedDates(CancellationToken cancellationToken) {
         var query = new GetUnmarkedDatesQuery();
@@ -78,7 +78,7 @@ public class AttendancesController : ControllerBase {
         return Ok(result.Value);
     }
     
-    [Authorize]
+    [Authorize(Policy = "EmailVerified")]
     [HttpPost("record-attendance")]
     public async Task<IActionResult> RecordAttendance([FromBody] RecordAttendanceRequest request, CancellationToken cancellationToken) {
         var command = new RecordAttendanceCommand(

@@ -14,7 +14,7 @@ public class CoursesController : ControllerBase {
         _sender = sender;
     }
     
-    [Authorize]
+    [Authorize(Policy = "EmailVerified")]
     [HttpGet("all")]
     public async Task<IActionResult> GetCoursesForGroup(CancellationToken cancellationToken) {
         var query = new GetCoursesForGroupQuery();
