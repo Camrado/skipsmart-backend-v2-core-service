@@ -34,7 +34,7 @@ internal sealed class ChangeSubgroupsCommandHandler : ICommandHandler<ChangeSubg
         
         user.ChangeLanguageSubgroup(request.NewLanguageSubgroup);
         user.ChangeFacultySubgroup(request.NewFacultySubgroup);
-        _attendanceRepository.DeleteByUserId(user.Id, cancellationToken);
+        _attendanceRepository.DeleteByUserId(user.Id);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
         

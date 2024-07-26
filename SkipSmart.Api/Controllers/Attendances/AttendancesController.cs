@@ -94,6 +94,6 @@ public class AttendancesController : ControllerBase {
             return BadRequest(result.Error);
         }
         
-        return Ok(result.Value);
+        return Ok();
     }
 }

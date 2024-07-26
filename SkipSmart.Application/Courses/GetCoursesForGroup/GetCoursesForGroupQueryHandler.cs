@@ -34,7 +34,7 @@ internal sealed class GetCoursesForGroupQueryHandler : IQueryHandler<GetCoursesF
         int semester = _dateTimeProvider.TodayInBaku >= _dateTimeProvider.FirstSemesterStartDate.AddMonths(-1) &&
                        _dateTimeProvider.TodayInBaku < _dateTimeProvider.SecondSemesterStartDate.AddDays(-5) ? 1 : 2;
         
-        var courses = await connection.QueryAsync<CourseResponse>(sql, new { _userContext.GroupId, semester });
+        var courses = await connection.QueryAsync<CourseResponse>(sql, new { _userContext.GroupId, Semester = semester });
         
         return courses.ToList();
     }

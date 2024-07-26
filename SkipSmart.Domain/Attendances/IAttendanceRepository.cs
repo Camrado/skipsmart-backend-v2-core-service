@@ -11,5 +11,5 @@ public interface IAttendanceRepository {
     
     void Add(Attendance attendance);
     
-    void DeleteByUserId(Guid userId, CancellationToken cancellationToken = default);
+    void DeleteByUserId(Guid userId);
 }

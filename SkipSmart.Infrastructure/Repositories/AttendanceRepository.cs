@@ -33,11 +33,11 @@ internal sealed class AttendanceRepository : Repository<Attendance>, IAttendance
             .ToListAsync(cancellationToken);
     }
 
-    public void DeleteByUserId(Guid userId, CancellationToken cancellationToken = default) {
+    public void DeleteByUserId(Guid userId) {
         var attendancesToRemove = DbContext
             .Set<Attendance>()
             .Where(a => a.UserId == userId)
-            .ToListAsync(cancellationToken);
+            .ToList();
         
         DbContext.RemoveRange(attendancesToRemove);
     }

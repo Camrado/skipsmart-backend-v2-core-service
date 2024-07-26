@@ -113,9 +113,9 @@ public static class DependencyInjection {
         services.Configure<TimetableOptions>(configuration.GetSection("Timetable"));
         
         services.AddHttpClient<ITimetableService, TimetableService>((serviceProvider, httpClient) => {
-            var timetableOptions = serviceProvider.GetRequiredService<IOptions<TimetableOptions>>().Value;
+            // var timetableOptions = serviceProvider.GetRequiredService<IOptions<TimetableOptions>>().Value;
 
-            httpClient.BaseAddress = new Uri(timetableOptions.BaseUrl);
+            // httpClient.BaseAddress = new Uri(timetableOptions.BaseUrl);
         });
     }
 }

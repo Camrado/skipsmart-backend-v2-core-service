@@ -22,22 +22,39 @@ internal sealed class GetAttendanceStatisticsQueryHandler
         
         var sql = """
                   -- noinspection SqlNoDataSourceInspection
+                  WITH course_info AS (
+                    SELECT
+                        ch.course_id,
+                        FLOOR(CEIL(ch.hours / 1.5) / 4) AS TotalSkipsAllowedNumber,
+                        CEIL(ch.hours / 1.5) AS TotalLessonsNumber
+                    FROM 
+                        course_hours AS ch
+                    WHERE
+                        ch.course_id = @CourseId
+                  ),
+                  attendance_counts AS (
+                    SELECT 
+                        a.course_id,
+                        COUNT(CASE WHEN a.has_attended THEN 1 END) AS AttendedLessonsNumber,
+                        COUNT(CASE WHEN NOT a.has_attended THEN 1 END) AS SkippedLessonsNumber
+                    FROM
+                        attendances as a
+                    WHERE
+                        a.course_id = @CourseId AND
+                        a.user_id = @UserId
+                    GROUP BY
+                        a.course_id)
                   SELECT
                       @CourseId AS CourseId,
-                      COUNT(CASE WHEN a.has_attended THEN 1 END) AS AttendedLessonsNumber,
-                      COUNT(CASE WHEN NOT a.has_attended THEN 1 END) AS SkippedLessonsNumber,
-                      CEIL(c.hours / 1.5) - COUNT(*) AS RemainingLessonsNumber,
-                      FLOOR(CEIL(c.hours / 1.5) / 4) - COUNT(CASE WHEN NOT a.has_attended THEN 1 END) AS RemainingSkipsNumber,
-                      CEIL(c.hours / 1.5) AS TotalLessonsNumber
+                      COALESCE(ac.AttendedLessonsNumber, 0) AS AttendedLessonsNumber,
+                      COALESCE(ac.SkippedLessonsNumber, 0) AS SkippedLessonsNumber,
+                      ci.TotalLessonsNumber - COALESCE(ac.AttendedLessonsNumber, 0) - COALESCE(ac.SkippedLessonsNumber, 0) AS RemainingLessonsNumber,
+                      ci.TotalSkipsAllowedNumber - COALESCE(ac.SkippedLessonsNumber, 0) AS RemainingSkipsNumber,
+                      ci.TotalLessonsNumber AS TotalLessonsNumber
                   FROM
-                      attendances AS a
-                  LEFT JOIN (SELECT ch.course_id, ch.hours AS hours FROM course_hours ch WHERE ch.course_id = @CourseId) AS c 
-                      ON c.course_id = a.course_id
-                  WHERE
-                      a.course_id = @CourseId AND
-                      a.user_id = @UserId
-                  GROUP BY
-                      c.hours
+                      course_info AS ci
+                  LEFT JOIN attendance_counts AS ac
+                      ON ci.course_id = ac.course_id
                   """;
 
         var courseAttendanceStatus = await connection.QueryFirstOrDefaultAsync<CourseAttendanceStatisticsResponse>(sql, 

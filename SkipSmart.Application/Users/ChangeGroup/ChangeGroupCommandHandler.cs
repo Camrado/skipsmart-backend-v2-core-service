@@ -42,7 +42,7 @@ internal sealed class ChangeGroupCommandHandler : ICommandHandler<ChangeGroupCom
         var user = await _userRepository.GetByIdAsync(_userContext.UserId, cancellationToken);
         
         user.ChangeGroup(newGroup.Id);
-        _attendanceRepository.DeleteByUserId(user.Id, cancellationToken);
+        _attendanceRepository.DeleteByUserId(user.Id);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
         
