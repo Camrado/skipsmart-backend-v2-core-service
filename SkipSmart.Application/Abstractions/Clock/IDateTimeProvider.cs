@@ -8,4 +8,8 @@ public interface IDateTimeProvider {
     DateTime DateTimeInBaku { get; }
     
     DateOnly SemesterStartDate { get; }
+    
+    DateOnly FirstSemesterStartDate { get; }
+    
+    DateOnly SecondSemesterStartDate { get; }
 }

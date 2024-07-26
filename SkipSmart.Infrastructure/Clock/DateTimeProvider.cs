@@ -41,4 +41,8 @@ internal sealed class DateTimeProvider : IDateTimeProvider {
             }
         }
     }
+
+    public DateOnly FirstSemesterStartDate => new DateOnly(2024, 9, 2);
+
+    public DateOnly SecondSemesterStartDate => new DateOnly(2025, 1, 20);
 }
