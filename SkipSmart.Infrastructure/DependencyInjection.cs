@@ -20,7 +20,6 @@ using SkipSmart.Domain.Groups;
 using SkipSmart.Domain.MarkedDates;
 using SkipSmart.Domain.Users;
 using SkipSmart.Infrastructure.Authentication;
-using SkipSmart.Infrastructure.Authorization;
 using SkipSmart.Infrastructure.Clock;
 using SkipSmart.Infrastructure.Data;
 using SkipSmart.Infrastructure.Email;
@@ -106,10 +105,8 @@ public static class DependencyInjection {
     private static void AddAuthorization(IServiceCollection services) {
         services.AddAuthorization(options => {
             options.AddPolicy("EmailVerified", policy =>
-                policy.Requirements.Add(new EmailVerifiedRequirement()));
+                policy.RequireClaim("email_verified", "true"));
         });
-        
-        services.AddSingleton<IAuthorizationHandler, EmailVerifiedHandler>();
     }
 
     private static void AddTimetable(IServiceCollection services, IConfiguration configuration) {
