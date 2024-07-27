@@ -40,13 +40,12 @@ public static class DependencyInjection {
         
         AddAuthorization(services);
         
-        AddTimetable(services, configuration);
+        AddTimetable(services);
         
         return services;
     }
     
     private static void AddPersistence(IServiceCollection services) {
-        // TODO: Add database connection string to .env file
         var connectionString = Environment.GetEnvironmentVariable("DATABASE_CONNECTION_STRING") ??
                                throw new ApplicationException("Database connection string is missing.");
 
@@ -109,13 +108,7 @@ public static class DependencyInjection {
         });
     }
 
-    private static void AddTimetable(IServiceCollection services, IConfiguration configuration) {
-        services.Configure<TimetableOptions>(configuration.GetSection("Timetable"));
-        
-        services.AddHttpClient<ITimetableService, TimetableService>((serviceProvider, httpClient) => {
-            // var timetableOptions = serviceProvider.GetRequiredService<IOptions<TimetableOptions>>().Value;
-
-            // httpClient.BaseAddress = new Uri(timetableOptions.BaseUrl);
-        });
+    private static void AddTimetable(IServiceCollection services) {
+        services.AddHttpClient<ITimetableService, TimetableService>();
     }
 }

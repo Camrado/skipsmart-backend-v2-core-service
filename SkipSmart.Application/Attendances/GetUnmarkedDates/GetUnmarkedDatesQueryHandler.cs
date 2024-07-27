@@ -39,7 +39,7 @@ internal sealed class GetUnmarkedDatesQueryHandler : IQueryHandler<GetUnmarkedDa
                   WHERE
                     user_id = @UserId
                   """;
-
+        
         var markedDatesResponse = await connection.QueryAsync<MarkedDateResponse>(sql, new {
             _userContext.UserId
         });
@@ -48,6 +48,10 @@ internal sealed class GetUnmarkedDatesQueryHandler : IQueryHandler<GetUnmarkedDa
         var startDate = _dateTimeProvider.TodayInBaku.AddMonths(-1).AddDays(-15) > _dateTimeProvider.SemesterStartDate
             ? _dateTimeProvider.TodayInBaku.AddMonths(-1).AddDays(-15)
             : _dateTimeProvider.SemesterStartDate;
+        
+        if (startDate >= _dateTimeProvider.TodayInBaku.AddDays(-1)) {
+            return new List<DateOnly>();
+        }
         
         var workingDaysResult = await _timetableService
             .GetWorkingDaysForRange(_userContext.UserId, startDate, _dateTimeProvider.TodayInBaku.AddDays(-1), cancellationToken);
@@ -58,6 +62,6 @@ internal sealed class GetUnmarkedDatesQueryHandler : IQueryHandler<GetUnmarkedDa
 
         var unmarkedDates = workingDaysResult.Value.Except(markedDates);
 
-        return unmarkedDates.ToList();
+        return workingDaysResult.Value.ToList();
     }
 }

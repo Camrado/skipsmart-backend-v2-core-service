@@ -22,14 +22,16 @@ internal sealed class TimetableService : ITimetableService {
     private readonly IUserRepository _userRepository;
     private readonly IGroupRepository _groupRepository;
     private readonly string _key;
+    private readonly string _baseUrl;
     
     public TimetableService(HttpClient httpClient, IGroupRepository groupRepository, IUserRepository userRepository) {
         _httpClient = httpClient;
         _userRepository = userRepository;
         _groupRepository = groupRepository;
-        // TODO: Add Timetable API key to .env file
         _key = Environment.GetEnvironmentVariable("TIMETABLE_API_KEY") 
                ?? throw new ApplicationException("Timetable API key is missing");
+        _baseUrl = Environment.GetEnvironmentVariable("TIMETABLE_API_BASE_URL") 
+                   ?? throw new ApplicationException("Timetable API base URL is missing");
     }
     
     public async Task<Result<IReadOnlyList<CourseTimetableForGroupResponse>>> GetTimetableForDate(Guid groupId, 
@@ -41,13 +43,11 @@ internal sealed class TimetableService : ITimetableService {
 
             var queryParams = HttpUtility.ParseQueryString(string.Empty);
             queryParams["key"] = _key;
-            // queryParams["group_id"] = edupageClassId.ToString();
-            queryParams["group_id"] = "-113";
-            // queryParams["date"] = timetableDate.ToString("yyyy-MM-dd");
-            queryParams["date"] = "2024-07-12";
+            queryParams["group_id"] = edupageClassId.ToString();
+            queryParams["date"] = timetableDate.ToString("yyyy-MM-dd");
         
             var response = await _httpClient.GetAsync(
-                $"http://127.0.0.1:5000/api/timetable-service/v1/timetable-for-date?{queryParams}", cancellationToken);
+                $"{_baseUrl}/timetable-for-date?{queryParams}", cancellationToken);
             response.EnsureSuccessStatusCode();
         
             var responseData = await response.Content.ReadFromJsonAsync<IReadOnlyList<CourseTimetableForGroupResponse>>(cancellationToken);
@@ -76,7 +76,7 @@ internal sealed class TimetableService : ITimetableService {
             queryParams["end_date"] = endDate.ToString("yyyy-MM-dd");
         
             var response = await _httpClient.GetAsync(
-                $"http://127.0.0.1:5000/api/timetable-service/v1/working-days?{queryParams}", cancellationToken);
+                $"{_baseUrl}/working-days?{queryParams}", cancellationToken);
             response.EnsureSuccessStatusCode();
         
             var responseData = await response.Content.ReadFromJsonAsync<IReadOnlyList<DateOnly>>(cancellationToken);

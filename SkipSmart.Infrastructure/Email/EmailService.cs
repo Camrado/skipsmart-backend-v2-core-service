@@ -13,7 +13,6 @@ internal sealed class EmailService : IEmailService {
     private readonly int _port;
     
     public EmailService() {
-        // TODO: Add fromMail and password and "smtp-mail.outlook.com" and 587 to .env file
         _fromMail = Environment.GetEnvironmentVariable("EMAIL_ADDRESS") ?? throw new InvalidOperationException("Email address not found");
         _password = Environment.GetEnvironmentVariable("EMAIL_PASSWORD") ?? throw new InvalidOperationException("Email password not found");
         _host = Environment.GetEnvironmentVariable("EMAIL_HOST") ?? throw new InvalidOperationException("Email host not found");
