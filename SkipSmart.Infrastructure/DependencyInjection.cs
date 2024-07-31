@@ -109,6 +109,8 @@ public static class DependencyInjection {
     }
 
     private static void AddTimetable(IServiceCollection services) {
-        services.AddHttpClient<ITimetableService, TimetableService>();
+        services.AddHttpClient<ITimetableService, TimetableService>(client => {
+            client.Timeout = TimeSpan.FromSeconds(25);
+        });
     }
 }

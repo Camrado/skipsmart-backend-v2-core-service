@@ -20,7 +20,7 @@ internal sealed class GetTimetableForGroupQueryHandler : IQueryHandler<GetTimeta
             .GetTimetableForDate(_userContext.GroupId, request.TimetableDate, cancellationToken);
 
         if (timetableResult.IsFailure) {
-            return Result.Failure<IReadOnlyList<CourseTimetableForGroupResponse>>(AttendanceErrors.CouldNotRetrieveTimetable);
+            return Result.Failure<IReadOnlyList<CourseTimetableForGroupResponse>>(timetableResult.Error);
         }
 
         return timetableResult;

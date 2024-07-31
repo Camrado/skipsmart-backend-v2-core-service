@@ -17,6 +17,10 @@ internal sealed class TimetableService : ITimetableService {
     private static readonly Error WorkingDaysRequestFailed = new(
         "Timetable.WorkingDaysRequestFailed",
         "Failed to acquire working days data from the external service");
+
+    private static readonly Error RequestTimeout = new(
+        "Timetable.RequestTimeout",
+        "Request to the timetable service has timed out");
     
     private readonly HttpClient _httpClient;
     private readonly IUserRepository _userRepository;
@@ -59,6 +63,8 @@ internal sealed class TimetableService : ITimetableService {
             return responseData.ToList();
         } catch (HttpRequestException) {
             return Result.Failure<IReadOnlyList<CourseTimetableForGroupResponse>>(TimetableRequestFailed);
+        } catch (TaskCanceledException) {
+            return Result.Failure<IReadOnlyList<CourseTimetableForGroupResponse>>(RequestTimeout);
         }
     }
 
@@ -88,6 +94,8 @@ internal sealed class TimetableService : ITimetableService {
             return responseData.ToList();
         } catch (HttpRequestException) {
             return Result.Failure<IReadOnlyList<DateOnly>>(WorkingDaysRequestFailed);
+        } catch (TaskCanceledException) {
+            return Result.Failure<IReadOnlyList<DateOnly>>(RequestTimeout);
         }
     }
 }

@@ -57,7 +57,7 @@ internal sealed class GetUnmarkedDatesQueryHandler : IQueryHandler<GetUnmarkedDa
             .GetWorkingDaysForRange(_userContext.UserId, startDate, _dateTimeProvider.TodayInBaku.AddDays(-1), cancellationToken);
         
         if (workingDaysResult.IsFailure) {
-            return Result.Failure<IReadOnlyList<DateOnly>>(AttendanceErrors.CouldNotRetrieveWorkingDaysForDateRange);
+            return Result.Failure<IReadOnlyList<DateOnly>>(workingDaysResult.Error);
         }
 
         var unmarkedDates = workingDaysResult.Value.Except(markedDates);
