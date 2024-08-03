@@ -39,6 +39,6 @@ internal sealed class LoginUserQueryHandler : IQueryHandler<LoginUserQuery, Acce
 
         var accessToken = _jwtService.CreateToken(user);
 
-        return new AccessTokenResponse(accessToken.Value);
+        return accessToken.Value;
     }
 }

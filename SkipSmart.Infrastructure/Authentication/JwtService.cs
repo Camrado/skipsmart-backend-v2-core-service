@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using SkipSmart.Application.Abstractions.Authentication;
+using SkipSmart.Application.Users.Shared;
 using SkipSmart.Domain.Abstractions;
 using SkipSmart.Domain.Users;
 
@@ -20,7 +21,7 @@ internal sealed class JwtService : IJwtService {
         _authenticationOptions = authenticationOptions.Value;
     }
     
-    public Result<string> CreateToken(User user) {
+    public Result<AccessTokenResponse> CreateToken(User user) {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.UTF8.GetBytes(_secret);
 
@@ -38,11 +39,13 @@ internal sealed class JwtService : IJwtService {
             Audience = _authenticationOptions.Audience,
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
         };
+
+        var expirationDate = DateOnly.FromDateTime(tokenDescriptor.Expires.Value);
         
         var token = tokenHandler.CreateToken(tokenDescriptor);
 
         var jwt = tokenHandler.WriteToken(token);
 
-        return jwt;
+        return new AccessTokenResponse(jwt, expirationDate);
     }
 }

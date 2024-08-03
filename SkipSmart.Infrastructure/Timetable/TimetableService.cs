@@ -38,7 +38,7 @@ internal sealed class TimetableService : ITimetableService {
                    ?? throw new ApplicationException("Timetable API base URL is missing");
     }
     
-    public async Task<Result<IReadOnlyList<CourseTimetableForGroupResponse>>> GetTimetableForDate(Guid groupId, 
+    public async Task<Result<List<TimetableResponse>>> GetTimetableForDate(Guid groupId, 
         DateOnly timetableDate, CancellationToken cancellationToken = default) 
     {
         try {
@@ -54,17 +54,17 @@ internal sealed class TimetableService : ITimetableService {
                 $"{_baseUrl}/timetable-for-date?{queryParams}", cancellationToken);
             response.EnsureSuccessStatusCode();
         
-            var responseData = await response.Content.ReadFromJsonAsync<IReadOnlyList<CourseTimetableForGroupResponse>>(cancellationToken);
+            var responseData = await response.Content.ReadFromJsonAsync<List<TimetableResponse>>(cancellationToken);
 
             if (responseData is null) {
-                return Result.Failure<IReadOnlyList<CourseTimetableForGroupResponse>>(TimetableRequestFailed);
+                return Result.Failure<List<TimetableResponse>>(TimetableRequestFailed);
             }
             
             return responseData.ToList();
         } catch (HttpRequestException) {
-            return Result.Failure<IReadOnlyList<CourseTimetableForGroupResponse>>(TimetableRequestFailed);
+            return Result.Failure<List<TimetableResponse>>(TimetableRequestFailed);
         } catch (TaskCanceledException) {
-            return Result.Failure<IReadOnlyList<CourseTimetableForGroupResponse>>(RequestTimeout);
+            return Result.Failure<List<TimetableResponse>>(RequestTimeout);
         }
     }
 

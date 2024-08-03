@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 using SkipSmart.Application.Exceptions;
 using SkipSmart.Domain.Abstractions;
 
@@ -29,6 +30,11 @@ public sealed class ApplicationDbContext : DbContext, IUnitOfWork {
         catch (DbUpdateConcurrencyException ex) {
             throw new ConcurrencyException("Concurrency exception occurred", ex);
         }
+        catch (DbUpdateException ex) when (ex.InnerException is PostgresException postgresEx &&
+                                           postgresEx.SqlState == "23505") {
+            throw new DuplicateEmailException("Email is already taken", ex);
+        }
+        
     }
 
     private async Task PublishDomainEventsAsync() {

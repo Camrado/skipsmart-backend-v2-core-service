@@ -26,4 +26,8 @@ public static class UserErrors {
     public static Error CouldNotSendVerificationEmail = new(
         "User.CouldNotSendVerificationEmail",
         "The verification email could not be sent");
+    
+    public static Error EmailIsAlreadyTaken = new(
+        "User.EmailIsAlreadyTaken",
+        "The email is already taken");
 }

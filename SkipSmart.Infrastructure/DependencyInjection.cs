@@ -102,10 +102,7 @@ public static class DependencyInjection {
     }
 
     private static void AddAuthorization(IServiceCollection services) {
-        services.AddAuthorization(options => {
-            options.AddPolicy("EmailVerified", policy =>
-                policy.RequireClaim("email_verified", "true"));
-        });
+        services.AddAuthorization();
     }
 
     private static void AddTimetable(IServiceCollection services) {

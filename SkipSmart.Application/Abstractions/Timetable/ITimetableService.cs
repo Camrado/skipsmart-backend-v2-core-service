@@ -4,7 +4,7 @@ using SkipSmart.Domain.Abstractions;
 namespace SkipSmart.Application.Abstractions.Timetable;
 
 public interface ITimetableService {
-    Task<Result<IReadOnlyList<CourseTimetableForGroupResponse>>> GetTimetableForDate(Guid groupId, DateOnly timetableDate, CancellationToken cancellationToken = default);
+    Task<Result<List<TimetableResponse>>> GetTimetableForDate(Guid groupId, DateOnly timetableDate, CancellationToken cancellationToken = default);
     
     // Cache by GroupId, not GroupId + Subgroup which will multiply everything by two.
     // Return timetable for the whole group and then in the frontend filter by the subgroup. 

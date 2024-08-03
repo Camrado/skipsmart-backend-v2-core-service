@@ -52,7 +52,7 @@ internal sealed class VerifyEmailCommandHandler : ICommandHandler<VerifyEmailCom
         var accessTokenResult = _jwtService.CreateToken(user);
 
         return accessTokenResult.IsSuccess
-            ? new AccessTokenResponse(accessTokenResult.Value)
+            ? accessTokenResult.Value
             : Result.Failure<AccessTokenResponse>(UserErrors.JwtTokenWasNotCreated);
     }
 }

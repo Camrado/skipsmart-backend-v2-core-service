@@ -1,11 +1,9 @@
 ﻿namespace SkipSmart.Application.Attendances.GetTimetableForGroup;
 
-public class CourseTimetableForGroupResponse {
+public class TimetableResponse {
     public int Period { get; set; }
     
     public string CourseName { get; set; }
-    
-    public Guid CourseId { get; set; }
     
     public int FacultySubgroup { get; set; }
     

@@ -41,33 +41,33 @@ public class UsersController : ControllerBase {
         return Ok(result.Value);
     }
     
-    [Authorize]
-    [HttpPost("send-verification-email")]
-    public async Task<IActionResult> SendVerificationEmail(CancellationToken cancellationToken) {
-        var command = new SendNewVerificationEmailCommand();
-
-        var result = await _sender.Send(command, cancellationToken);
-
-        if (result.IsFailure) {
-            return BadRequest(result.Error);
-        }
-        
-        return Ok();
-    }
+    // [Authorize]
+    // [HttpPost("send-verification-email")]
+    // public async Task<IActionResult> SendVerificationEmail(CancellationToken cancellationToken) {
+    //     var command = new SendNewVerificationEmailCommand();
+    //
+    //     var result = await _sender.Send(command, cancellationToken);
+    //
+    //     if (result.IsFailure) {
+    //         return BadRequest(result.Error);
+    //     }
+    //     
+    //     return Ok();
+    // }
     
-    [Authorize]
-    [HttpPost("verify-email")]
-    public async Task<IActionResult> VerifyEmail([FromBody] VerifyEmailRequest request, CancellationToken cancellationToken) {
-        var command = new VerifyEmailCommand(request.EmailVerificationCode);
-
-        var result = await _sender.Send(command, cancellationToken);
-
-        if (result.IsFailure) {
-            return BadRequest(result.Error);
-        }
-        
-        return Ok(result.Value);
-    }
+    // [Authorize]
+    // [HttpPost("verify-email")]
+    // public async Task<IActionResult> VerifyEmail([FromBody] VerifyEmailRequest request, CancellationToken cancellationToken) {
+    //     var command = new VerifyEmailCommand(request.EmailVerificationCode);
+    //
+    //     var result = await _sender.Send(command, cancellationToken);
+    //
+    //     if (result.IsFailure) {
+    //         return BadRequest(result.Error);
+    //     }
+    //     
+    //     return Ok(result.Value);
+    // }
     
     [AllowAnonymous]
     [HttpPost("login")]
@@ -93,7 +93,7 @@ public class UsersController : ControllerBase {
         return Ok(result.Value);
     }
     
-    [Authorize(Policy = "EmailVerified")]
+    [Authorize]
     [HttpPatch("change-group")]
     public async Task<IActionResult> ChangeGroup([FromBody] ChangeGroupRequest request, CancellationToken cancellationToken) {
         var command = new ChangeGroupCommand(request.NewGroupId);
@@ -107,7 +107,7 @@ public class UsersController : ControllerBase {
         return Ok(result.Value);
     }
     
-    [Authorize(Policy = "EmailVerified")]
+    [Authorize]
     [HttpPatch("change-subgroups")]
     public async Task<IActionResult> ChangeSubGroups([FromBody] ChangeSubgroupsRequest request, CancellationToken cancellationToken) {
         var command = new ChangeSubgroupsCommand(request.NewLanguageSubgroup, request.NewFacultySubgroup);

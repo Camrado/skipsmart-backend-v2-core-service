@@ -48,6 +48,6 @@ internal sealed class ChangeGroupCommandHandler : ICommandHandler<ChangeGroupCom
         
         var accessToken = _jwtService.CreateToken(user);
         
-        return new AccessTokenResponse(accessToken.Value);
+        return accessToken.Value;
     }
 }
