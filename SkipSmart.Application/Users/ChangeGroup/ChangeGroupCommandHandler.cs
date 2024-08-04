@@ -4,6 +4,7 @@ using SkipSmart.Application.Users.Shared;
 using SkipSmart.Domain.Abstractions;
 using SkipSmart.Domain.Attendances;
 using SkipSmart.Domain.Groups;
+using SkipSmart.Domain.MarkedDates;
 using SkipSmart.Domain.Users;
 
 namespace SkipSmart.Application.Users.ChangeGroup;
@@ -12,6 +13,7 @@ internal sealed class ChangeGroupCommandHandler : ICommandHandler<ChangeGroupCom
     private readonly IAttendanceRepository _attendanceRepository;
     private readonly IUserRepository _userRepository;
     private readonly IGroupRepository _groupRepository;
+    private readonly IMarkedDateRepository _markedDateRepository;
     private readonly IUserContext _userContext;
     private readonly IJwtService _jwtService;
     private readonly IUnitOfWork _unitOfWork;
@@ -20,6 +22,7 @@ internal sealed class ChangeGroupCommandHandler : ICommandHandler<ChangeGroupCom
         IAttendanceRepository attendanceRepository,
         IUserRepository userRepository,
         IGroupRepository groupRepository,
+        IMarkedDateRepository markedDateRepository,
         IUserContext userContext,
         IJwtService jwtService,
         IUnitOfWork unitOfWork) 
@@ -27,6 +30,7 @@ internal sealed class ChangeGroupCommandHandler : ICommandHandler<ChangeGroupCom
         _attendanceRepository = attendanceRepository;
         _userRepository = userRepository;
         _groupRepository = groupRepository;
+        _markedDateRepository = markedDateRepository;
         _userContext = userContext;
         _jwtService = jwtService;
         _unitOfWork = unitOfWork;
@@ -43,6 +47,7 @@ internal sealed class ChangeGroupCommandHandler : ICommandHandler<ChangeGroupCom
         
         user.ChangeGroup(newGroup.Id);
         _attendanceRepository.DeleteByUserId(user.Id);
+        _markedDateRepository.DeleteByUserId(user.Id);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
         

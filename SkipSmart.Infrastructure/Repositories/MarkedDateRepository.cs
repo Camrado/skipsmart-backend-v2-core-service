@@ -12,4 +12,13 @@ internal sealed class MarkedDateRepository : Repository<MarkedDate>, IMarkedDate
             .Set<MarkedDate>()
             .FirstOrDefaultAsync(md => md.UserId == userId && md.RecordedDate == recordedDate, cancellationToken);
     }
+    
+    public void DeleteByUserId(Guid userId) {
+        var markedDatesToRemove = DbContext
+            .Set<MarkedDate>()
+            .Where(md => md.UserId == userId)
+            .ToList();
+        
+        DbContext.RemoveRange(markedDatesToRemove);
+    }
 }

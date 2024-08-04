@@ -5,5 +5,7 @@ public interface IMarkedDateRepository {
 
     Task<MarkedDate?> GetByDetailsAsync(DateOnly recordedDate, Guid userId, CancellationToken cancellationToken = default);
     
+    void DeleteByUserId(Guid userId);
+    
     void Add(MarkedDate user);
 }
