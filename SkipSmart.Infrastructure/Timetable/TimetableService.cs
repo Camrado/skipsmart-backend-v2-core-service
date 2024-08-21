@@ -44,12 +44,12 @@ internal sealed class TimetableService : ITimetableService {
         try {
             var group = await _groupRepository.GetByIdAsync(groupId, cancellationToken);
             var edupageClassId = group.EdupageClassId;
-
+            
             var queryParams = HttpUtility.ParseQueryString(string.Empty);
             queryParams["key"] = _key;
             queryParams["group_id"] = edupageClassId.ToString();
             queryParams["date"] = timetableDate.ToString("yyyy-MM-dd");
-        
+            
             var response = await _httpClient.GetAsync(
                 $"{_baseUrl}/timetable-for-date?{queryParams}", cancellationToken);
             response.EnsureSuccessStatusCode();

@@ -62,6 +62,6 @@ internal sealed class GetUnmarkedDatesQueryHandler : IQueryHandler<GetUnmarkedDa
 
         var unmarkedDates = workingDaysResult.Value.Except(markedDates);
 
-        return workingDaysResult.Value.ToList();
+        return unmarkedDates.ToList();
     }
 }

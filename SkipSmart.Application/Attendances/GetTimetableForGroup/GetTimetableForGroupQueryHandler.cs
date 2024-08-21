@@ -25,16 +25,17 @@ internal sealed class GetTimetableForGroupQueryHandler : IQueryHandler<GetTimeta
         if (timetableResult.IsFailure) {
             return Result.Failure<IReadOnlyList<CourseTimetableForGroupResponse>>(timetableResult.Error);
         }
-
+        
         var formattedTimetable = new List<CourseTimetableForGroupResponse>();
+        var myGroupCourses = await _courseRepository.GetAllByGroupIdAsync(_userContext.GroupId, cancellationToken);
 
         foreach (var lesson in timetableResult.Value) {
-            var course = await _courseRepository.GetByCourseNameAsync(lesson.CourseName, _userContext.GroupId, cancellationToken);
+            var course = myGroupCourses.FirstOrDefault(c => lesson.CourseName.Contains(c.CourseName.Value, StringComparison.OrdinalIgnoreCase));
             
             if (course is null) {
                 continue;
             }
-    
+            
             formattedTimetable.Add(new CourseTimetableForGroupResponse {
                 Period = lesson.Period,
                 CourseName = lesson.CourseName,
