@@ -41,10 +41,11 @@ if (app.Environment.IsDevelopment()) {
     
     // dotnet ef migrations add Create_Database --project SkipSmart.Infrastructure --startup-project SkipSmart.Api
     // run this command in the root directory of the solution
-    app.ApplyMigrations();
     
     // app.SeedData();
 }
+
+app.ApplyMigrations();
 
 app.UseCors("AllowSpecificOrigin");
 
