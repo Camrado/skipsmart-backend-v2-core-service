@@ -26,8 +26,8 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddCors(options => {
     options.AddPolicy("AllowSpecificOrigin", builder => {
         builder
-            .AllowAnyOrigin()
-            // .WithOrigins("http://localhost:8080")
+            // .AllowAnyOrigin()
+            .WithOrigins("https://skipsmart.org")
             .AllowAnyHeader()
             .AllowAnyMethod();
     });
