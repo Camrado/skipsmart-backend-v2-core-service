@@ -23,6 +23,16 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
+builder.Services.AddCors(options => {
+    options.AddPolicy("AllowSpecificOrigin", builder => {
+        builder
+            .AllowAnyOrigin()
+            // .WithOrigins("http://localhost:8080", "http://192.168.1.68:8080")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment()) {
@@ -35,6 +45,8 @@ if (app.Environment.IsDevelopment()) {
     
     // app.SeedData();
 }
+
+app.UseCors("AllowSpecificOrigin");
 
 app.UseHttpsRedirection();
 
