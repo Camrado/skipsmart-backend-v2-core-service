@@ -30,7 +30,8 @@ public class UsersController : ControllerBase {
             request.LanguageSubgroup,
             request.FacultySubgroup,
             request.Password,
-            request.GroupId);
+            request.GroupId, 
+            request.UserId);
 
         var result = await _sender.Send(command, cancellationToken);
 

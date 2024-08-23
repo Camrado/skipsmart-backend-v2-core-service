@@ -1,4 +1,5 @@
-﻿using SkipSmart.Domain.Abstractions;
+﻿using System.Security.Cryptography.X509Certificates;
+using SkipSmart.Domain.Abstractions;
 using SkipSmart.Domain.Users.Events;
 
 namespace SkipSmart.Domain.Users;
@@ -35,10 +36,10 @@ public class User : Entity {
      private User() {
      }
      
-     public static User Create(FirstName firstName, LastName lastName, Email email, int languageSubgroup, int facultySubgroup, Password password, Guid groupId) {
-         var user = new User(Guid.NewGuid(), firstName, lastName, email, languageSubgroup, facultySubgroup, false, password, groupId);
+     public static User Create(Guid userId, FirstName firstName, LastName lastName, Email email, int languageSubgroup, int facultySubgroup, Password password, Guid groupId) {
+         var user = new User(userId, firstName, lastName, email, languageSubgroup, facultySubgroup, false, password, groupId);
          
-         user.RaiseDomainEvent(new UserCreatedDomainEvent(user.Id));
+         user.RaiseDomainEvent(new UserCreatedDomainEvent(userId));
          
          return user;
      }

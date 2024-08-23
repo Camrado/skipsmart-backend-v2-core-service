@@ -10,4 +10,5 @@ public sealed record RegisterUserCommand(
     int LanguageSubgroup,
     int FacultySubgroup,
     string Password,
-    Guid GroupId) : ICommand<AccessTokenResponse>;
+    Guid GroupId,
+    Guid? UserId) : ICommand<AccessTokenResponse>;

@@ -36,8 +36,9 @@ public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, A
         try {
             var userSalt = _passwordHasherService.GenerateSalt();
             var hashedPassword = _passwordHasherService.ComputeHash(request.Password, userSalt, _pepper, _iterations);
-
+            
             var user = User.Create(
+                request.UserId ?? Guid.NewGuid(),
                 new FirstName(request.FirstName),
                 new LastName(request.LastName),
                 new Email(request.Email),

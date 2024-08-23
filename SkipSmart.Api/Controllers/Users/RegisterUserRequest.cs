@@ -7,4 +7,5 @@ public sealed record RegisterUserRequest(
     int LanguageSubgroup, 
     int FacultySubgroup, 
     string Password, 
-    Guid GroupId);
+    Guid GroupId,
+    Guid? UserId);
