@@ -4,18 +4,21 @@ using SkipSmart.Application.Abstractions.Timetable;
 using SkipSmart.Domain.Abstractions;
 using SkipSmart.Domain.Attendances;
 using SkipSmart.Domain.Courses;
+using SkipSmart.Domain.Groups;
 
 namespace SkipSmart.Application.Attendances.GetTimetableForGroup;
 
 internal sealed class GetTimetableForGroupQueryHandler : IQueryHandler<GetTimetableForGroupQuery, IReadOnlyList<CourseTimetableForGroupResponse>> {
     private readonly ITimetableService _timetableService;
     private readonly ICourseRepository _courseRepository;
+    private readonly IGroupRepository _groupRepository;
     private readonly IUserContext _userContext;
     
-    public GetTimetableForGroupQueryHandler(ITimetableService timetableService, IUserContext userContext, ICourseRepository courseRepository) {
+    public GetTimetableForGroupQueryHandler(ITimetableService timetableService, IUserContext userContext, ICourseRepository courseRepository, IGroupRepository groupRepository) {
         _timetableService = timetableService;
         _userContext = userContext;
         _courseRepository = courseRepository;
+        _groupRepository = groupRepository;
     }
     
     public async Task<Result<IReadOnlyList<CourseTimetableForGroupResponse>>> Handle(GetTimetableForGroupQuery request, CancellationToken cancellationToken) {
@@ -28,6 +31,8 @@ internal sealed class GetTimetableForGroupQueryHandler : IQueryHandler<GetTimeta
         
         var formattedTimetable = new List<CourseTimetableForGroupResponse>();
         var myGroupCourses = await _courseRepository.GetAllByGroupIdAsync(_userContext.GroupId, cancellationToken);
+        var myGroupName = (await _groupRepository.GetByIdAsync(_userContext.GroupId, cancellationToken))?.GroupName.Value;
+        bool isMyGroupL1 = myGroupName?.Contains("L1") ?? false;
 
         foreach (var lesson in timetableResult.Value) {
             var course = myGroupCourses.FirstOrDefault(c => {
@@ -44,7 +49,8 @@ internal sealed class GetTimetableForGroupQueryHandler : IQueryHandler<GetTimeta
                 CourseName = lesson.CourseName,
                 CourseId = course.Id,
                 FacultySubgroup = lesson.FacultySubgroup,
-                LanguageSubgroup = lesson.LanguageSubgroup
+                LanguageSubgroup = lesson.LanguageSubgroup,
+                Teacher = isMyGroupL1 ? lesson.Teacher : string.Empty
             });
         }
 

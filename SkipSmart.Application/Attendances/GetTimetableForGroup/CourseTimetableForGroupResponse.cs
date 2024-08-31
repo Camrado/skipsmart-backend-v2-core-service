@@ -10,4 +10,6 @@ public class CourseTimetableForGroupResponse {
     public int FacultySubgroup { get; set; }
     
     public int LanguageSubgroup { get; set; }
+    
+    public string Teacher { get; set; }
 }
