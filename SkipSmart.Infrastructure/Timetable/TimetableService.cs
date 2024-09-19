@@ -76,6 +76,17 @@ internal sealed class TimetableService : ITimetableService {
             var user = await _userRepository.GetByIdAsync(userId, cancellationToken);
             var group = await _groupRepository.GetByIdAsync(user.GroupId, cancellationToken);
             var courses = (await _courseRepository.GetAllByGroupIdAsync(user.GroupId, cancellationToken)).Select(c => c.CourseName.Value);
+            
+            if (group.GroupName.Value.StartsWith("L1")) {
+                courses = courses.Select(c => {
+                    if (c == "English" || c == "French") {
+                        return c + user.LanguageSubgroup;
+                    }
+
+                    return c;
+                });
+            }
+            
             string coursesParam = string.Join(";", courses);
 
             var requestBody = new {
