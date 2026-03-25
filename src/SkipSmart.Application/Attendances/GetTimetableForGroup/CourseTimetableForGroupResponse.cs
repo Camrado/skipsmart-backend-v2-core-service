@@ -1,4 +1,4 @@
-﻿namespace SkipSmart.Application.Attendances.GetTimetableForGroup;
+namespace SkipSmart.Application.Attendances.GetTimetableForGroup;
 
 public class CourseTimetableForGroupResponse {
     public int Period { get; set; }

@@ -115,4 +115,32 @@ internal sealed class TimetableService : ITimetableService {
             return Result.Failure<IReadOnlyList<DateOnly>>(RequestTimeout);
         }
     }
+
+    public bool IsLessonIncludedInTimetable(TimetableResponse lesson, User user)
+    {
+        var groupCollectionsForL2 = new Dictionary<int, string>() {
+            { 1, "Aytan Babaliyeva All" },
+            { 2, "Irada Piriyeva All" },
+            { 3, "Vafa Guliyeva All" },
+            { 4, "Tarana Kalantarova All" },
+            { 5, "Latchine Bayramova" },
+            { 6, "Tarana Kalantarova" },
+            { 7, "Vafa Guliyeva" },
+            { 8, "Khalid Aslanov" }
+        };
+
+        var languageSubgroupNumber = lesson.Teacher switch
+        {
+            "Khalid Aslanov" => 8,
+            "Latchine Bayramova" => 5,
+            "Tarana Kalantarova" when lesson.Groups.Count == 5 => 4,
+            "Tarana Kalantarova" when lesson.Groups.Count != 5 => 6,
+            "Vafa Guliyeva" when lesson.Groups.Count == 5 => 3,
+            "Vafa Guliyeva" when lesson.Groups.Count != 5 => 7,
+            "Aytan Babaliyeva" => 1,
+            "Irada Piriyeva" => 2,
+        };
+
+        return user.LanguageSubgroup == languageSubgroupNumber;
+    }
 }

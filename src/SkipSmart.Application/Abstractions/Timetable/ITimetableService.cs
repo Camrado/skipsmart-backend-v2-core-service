@@ -1,5 +1,6 @@
 ﻿using SkipSmart.Application.Attendances.GetTimetableForGroup;
 using SkipSmart.Domain.Abstractions;
+using SkipSmart.Domain.Users;
 
 namespace SkipSmart.Application.Abstractions.Timetable;
 
@@ -14,4 +15,6 @@ public interface ITimetableService {
     // returns all timetables for a user (taking into account the subgroup as well) in a given range.
     // if in some date there's no lesson then the that will not be taken down any way.
     // it will return data only related to existing lessons
+    
+    bool IsLessonIncludedInTimetable(TimetableResponse lesson, User user);
 }

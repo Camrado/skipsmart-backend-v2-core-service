@@ -9,5 +9,7 @@ public class TimetableResponse {
     
     public int LanguageSubgroup { get; set; }
     
+    public List<string> Groups { get; set; }
+    
     public string Teacher { get; set; }
 }
