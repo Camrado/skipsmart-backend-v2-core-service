@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <ItemGroup>
+      <PackageReference Include="Asp.Versioning.Mvc" />
+      <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" />
+      <PackageReference Include="EFCore.NamingConventions" />
+      <PackageReference Include="MailKit" />
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" />
+      <PackageReference Include="MimeKit" />
+      <PackageReference Include="Newtonsoft.Json" />
+      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
+      <PackageReference Include="Quartz.Extensions.Hosting" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\SkipSmart.Application\SkipSmart.Application.csproj" />
+    </ItemGroup>
+
+</Project>

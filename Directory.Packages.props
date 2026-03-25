@@ -1,0 +1,61 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- API / Web -->
+    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="10.0.5" />
+    <PackageVersion Include="Swashbuckle.AspNetCore" Version="10.1.6" />
+    <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.3" />
+    <PackageVersion Include="Asp.Versioning.Mvc" Version="8.1.1" />
+    <PackageVersion Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.1" />
+
+    <!-- Entity Framework Core -->
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageVersion>
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageVersion>
+    <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.1" />
+    <PackageVersion Include="EFCore.NamingConventions" Version="10.0.1" />
+
+    <!-- Microsoft Extensions -->
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.5" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.5" />
+
+    <!-- CQRS / Validation -->
+    <PackageVersion Include="MediatR" Version="12.5.0" />
+    <PackageVersion Include="MediatR.Contracts" Version="2.0.1" />
+    <PackageVersion Include="FluentValidation.DependencyInjectionExtensions" Version="11.12.0" />
+
+    <!-- Data -->
+    <PackageVersion Include="Dapper" Version="2.1.72" />
+    <PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
+
+    <!-- Email -->
+    <PackageVersion Include="MailKit" Version="4.7.1.1" />
+    <PackageVersion Include="MimeKit" Version="4.7.1" />
+    <PackageVersion Include="Mailjet.Api" Version="4.0.0" />
+
+    <!-- Scheduling -->
+    <PackageVersion Include="Quartz.Extensions.Hosting" Version="3.16.1" />
+
+    <!-- Misc -->
+    <PackageVersion Include="dotenv.net" Version="3.2.0" />
+
+    <!-- Testing -->
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.3.0" />
+    <PackageVersion Include="xunit" Version="2.9.3" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageVersion>
+    <PackageVersion Include="coverlet.collector" Version="8.0.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageVersion>
+  </ItemGroup>
+</Project>
