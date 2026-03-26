@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using Dapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;

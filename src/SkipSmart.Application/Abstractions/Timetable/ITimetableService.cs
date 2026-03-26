@@ -1,4 +1,4 @@
-﻿using SkipSmart.Application.Attendances.GetTimetableForGroup;
+using SkipSmart.Application.Attendances.GetTimetableForGroup;
 using SkipSmart.Domain.Abstractions;
 using SkipSmart.Domain.Users;
 

@@ -1,4 +1,4 @@
-﻿using System.Net.Http.Json;
+using System.Net.Http.Json;
 using System.Web;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -77,16 +77,6 @@ internal sealed class TimetableService : ITimetableService {
             var group = await _groupRepository.GetByIdAsync(user.GroupId, cancellationToken);
             var courses = (await _courseRepository.GetAllByGroupIdAsync(user.GroupId, cancellationToken)).Select(c => c.CourseName.Value);
             
-            if (group.GroupName.Value.StartsWith("L2")) {
-                courses = courses.Select(c => {
-                    if (c == "English" || c == "French") {
-                        return c + user.LanguageSubgroup;
-                    }
-
-                    return c;
-                });
-            }
-            
             string coursesParam = string.Join(";", courses);
 
             var requestBody = new {
@@ -131,14 +121,14 @@ internal sealed class TimetableService : ITimetableService {
 
         var languageSubgroupNumber = lesson.Teacher switch
         {
-            "Khalid Aslanov" => 8,
-            "Latchine Bayramova" => 5,
-            "Tarana Kalantarova" when lesson.Groups.Count == 5 => 4,
-            "Tarana Kalantarova" when lesson.Groups.Count != 5 => 6,
-            "Vafa Guliyeva" when lesson.Groups.Count == 5 => 3,
-            "Vafa Guliyeva" when lesson.Groups.Count != 5 => 7,
             "Aytan Babaliyeva" => 1,
             "Irada Piriyeva" => 2,
+            "Vafa Guliyeva" when lesson.Groups.Count == 5 => 3,
+            "Tarana Kalantarova" when lesson.Groups.Count == 5 => 4,
+            "Latchine Bayramova" => 5,
+            "Tarana Kalantarova" when lesson.Groups.Count != 5 => 6,
+            "Vafa Guliyeva" when lesson.Groups.Count != 5 => 7,
+            "Khalid Aslanov" => 8,
         };
 
         return user.LanguageSubgroup == languageSubgroupNumber;
