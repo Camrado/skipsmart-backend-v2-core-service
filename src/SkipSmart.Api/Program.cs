@@ -1,4 +1,5 @@
 using dotenv.net;
+using Microsoft.EntityFrameworkCore;
 using SkipSmart.Api.Extensions;
 using SkipSmart.Api.JsonConverters;
 using SkipSmart.Application;
@@ -42,6 +43,13 @@ if (app.Environment.IsDevelopment()) {
     // run this command in the root directory of the solution
     
     // app.SeedData();
+}
+
+if (app.Environment.IsProduction())
+{
+    using var scope = app.Services.CreateScope();
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    db.Database.Migrate();
 }
 
 app.ApplyMigrations();
