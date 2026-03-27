@@ -1,4 +1,4 @@
-﻿using Dapper;
+using Dapper;
 using SkipSmart.Application.Abstractions.Authentication;
 using SkipSmart.Application.Abstractions.Data;
 using SkipSmart.Application.Abstractions.Messaging;
@@ -24,13 +24,13 @@ internal sealed class GetAttendanceStatisticsQueryHandler
                   -- noinspection SqlNoDataSourceInspection
                   WITH course_info AS (
                     SELECT
-                        ch.course_id,
-                        FLOOR(CEIL(ch.hours / 1.5) / 4) AS TotalSkipsAllowedNumber,
-                        CEIL(ch.hours / 1.5) AS TotalLessonsNumber
+                        c.id AS course_id,
+                        FLOOR(CEIL(c.hours / 1.5) / 4) AS TotalSkipsAllowedNumber,
+                        CEIL(c.hours / 1.5) AS TotalLessonsNumber
                     FROM 
-                        course_hours AS ch
+                        courses AS c
                     WHERE
-                        ch.course_id = @CourseId
+                        c.id = @CourseId
                   ),
                   attendance_counts AS (
                     SELECT 

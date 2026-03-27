@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SkipSmart.Domain.Courses;
 using SkipSmart.Domain.Groups;
@@ -22,5 +22,9 @@ internal sealed class CourseConfiguration : IEntityTypeConfiguration<Course> {
         builder.HasOne<Group>()
             .WithMany()
             .HasForeignKey(course => course.GroupId);
+            
+        builder.Property(course => course.Hours)
+            .HasColumnType("decimal(18,2)")
+            .IsRequired();
     }
 }

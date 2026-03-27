@@ -14,7 +14,7 @@ using SkipSmart.Application.Abstractions.Email;
 using SkipSmart.Application.Abstractions.Timetable;
 using SkipSmart.Domain.Abstractions;
 using SkipSmart.Domain.Attendances;
-using SkipSmart.Domain.CourseHours;
+
 using SkipSmart.Domain.Courses;
 using SkipSmart.Domain.Groups;
 using SkipSmart.Domain.MarkedDates;
@@ -57,7 +57,7 @@ public static class DependencyInjection {
         
         services.AddScoped<IAttendanceRepository, AttendanceRepository>();
         
-        services.AddScoped<ICourseHourRepository, CourseHourRepository>();
+
 
         services.AddScoped<ICourseRepository, CourseRepository>();
         

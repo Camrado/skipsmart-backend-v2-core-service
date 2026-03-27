@@ -33,7 +33,7 @@
 
     <!-- Data -->
     <PackageVersion Include="Dapper" Version="2.1.72" />
-    <PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
 
     <!-- Email -->
     <PackageVersion Include="MailKit" Version="4.7.1.1" />
