@@ -75,7 +75,7 @@ internal sealed class TimetableService : ITimetableService {
         try {
             var user = await _userRepository.GetByIdAsync(userId, cancellationToken);
             var group = await _groupRepository.GetByIdAsync(user.GroupId, cancellationToken);
-            var courses = (await _courseRepository.GetAllByGroupIdAsync(user.GroupId, cancellationToken)).Select(c => c.CourseName.Value);
+            var courses = (await _courseRepository.GetAllByGroupIdAsync(user.GroupId, cancellationToken)).Select(c => c.CourseName);
             
             string coursesParam = string.Join(";", courses);
 

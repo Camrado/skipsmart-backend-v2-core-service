@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using SkipSmart.Application.Abstractions.Authentication;
 
 namespace SkipSmart.Infrastructure.Authentication;
@@ -21,7 +21,4 @@ internal sealed class UserContext : IUserContext {
     public string Email => _httpContextAccessor.HttpContext?.User
         .Claims.FirstOrDefault(c => c.Type == "user_email")?.Value 
                            ?? throw new ApplicationException("User email is unavailable");
-
-    public bool IsEmailVerified => _httpContextAccessor.HttpContext?.User
-        .Claims.FirstOrDefault(c => c.Type == "email_verified")?.Value == "true";
-}
+}

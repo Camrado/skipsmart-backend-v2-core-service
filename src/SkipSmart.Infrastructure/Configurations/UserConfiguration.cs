@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SkipSmart.Domain.Groups;
 using SkipSmart.Domain.Users;
@@ -13,26 +13,16 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User> {
         
         builder.Property(user => user.FirstName)
             .IsRequired()
-            .HasMaxLength(100)
-            .HasConversion(firstName => firstName.Value, value => new FirstName(value));
+            .HasMaxLength(100);
 
         builder.Property(user => user.LastName)
             .IsRequired()
-            .HasMaxLength(100)
-            .HasConversion(lastName => lastName.Value, value => new LastName(value));
+            .HasMaxLength(100);
         
         builder.Property(user => user.Email)
             .IsRequired()
-            .HasMaxLength(150)
-            .HasConversion(email => email.Value, value => new Domain.Users.Email(value));
+            .HasMaxLength(150);
 
-        builder.Property(user => user.IsEmailVerified)
-            .HasDefaultValue(false);
-
-        builder.Property(user => user.EmailVerificationCode)
-            .IsRequired(false)
-            .HasMaxLength(6)
-            .HasConversion(emailVerificationCode => emailVerificationCode.Value, value => new EmailVerificationCode(value));
 
         builder.Property(user => user.LanguageSubgroup)
             .IsRequired();

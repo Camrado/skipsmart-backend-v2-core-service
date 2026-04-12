@@ -1,4 +1,4 @@
-﻿using Dapper;
+using Dapper;
 using SkipSmart.Application.Abstractions.Authentication;
 using SkipSmart.Application.Abstractions.Data;
 using SkipSmart.Application.Abstractions.Messaging;
@@ -25,7 +25,6 @@ internal sealed class GetLoggedInUserQueryHandler : IQueryHandler<GetLoggedInUse
                                u.first_name AS FirstName,
                                u.last_name AS LastName,
                                u.email AS Email,
-                               u.is_email_verified AS IsEmailVerified,
                                u.language_subgroup AS LanguageSubgroup,
                                u.faculty_subgroup AS FacultySubgroup,
                                g.group_name AS GroupName,

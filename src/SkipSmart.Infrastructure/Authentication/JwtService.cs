@@ -1,4 +1,4 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Options;
@@ -27,8 +27,7 @@ internal sealed class JwtService : IJwtService {
 
         var claims = new List<Claim> {
             new("user_id", user.Id.ToString()),
-            new("user_email", user.Email.Value),
-            new("email_verified", user.IsEmailVerified.ToString().ToLower()),
+            new("user_email", user.Email),
             new("group_id", user.GroupId.ToString())
         };
         

@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SkipSmart.Application.Users.ChangeGroup;
@@ -6,8 +6,6 @@ using SkipSmart.Application.Users.ChangeSubgroups;
 using SkipSmart.Application.Users.GetLoggedInUser;
 using SkipSmart.Application.Users.LoginUser;
 using SkipSmart.Application.Users.RegisterUser;
-using SkipSmart.Application.Users.SendNewVerificationEmail;
-using SkipSmart.Application.Users.VerifyEmail;
 
 namespace SkipSmart.Api.Controllers.Users;
 
@@ -42,34 +40,6 @@ public class UsersController : ControllerBase {
         return Ok(result.Value);
     }
     
-    // [Authorize]
-    // [HttpPost("send-verification-email")]
-    // public async Task<IActionResult> SendVerificationEmail(CancellationToken cancellationToken) {
-    //     var command = new SendNewVerificationEmailCommand();
-    //
-    //     var result = await _sender.Send(command, cancellationToken);
-    //
-    //     if (result.IsFailure) {
-    //         return BadRequest(result.Error);
-    //     }
-    //     
-    //     return Ok();
-    // }
-    
-    // [Authorize]
-    // [HttpPost("verify-email")]
-    // public async Task<IActionResult> VerifyEmail([FromBody] VerifyEmailRequest request, CancellationToken cancellationToken) {
-    //     var command = new VerifyEmailCommand(request.EmailVerificationCode);
-    //
-    //     var result = await _sender.Send(command, cancellationToken);
-    //
-    //     if (result.IsFailure) {
-    //         return BadRequest(result.Error);
-    //     }
-    //     
-    //     return Ok(result.Value);
-    // }
-    
     [AllowAnonymous]
     [HttpPost("login")]
     public async Task<IActionResult> LogIn([FromBody] LoginUserRequest request, CancellationToken cancellationToken) {
@@ -93,7 +63,6 @@ public class UsersController : ControllerBase {
         
         return Ok(result.Value);
     }
-    
     
     [Authorize]
     [HttpPatch("change-group")]

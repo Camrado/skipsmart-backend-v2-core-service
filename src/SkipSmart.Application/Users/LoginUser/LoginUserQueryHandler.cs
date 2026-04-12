@@ -1,4 +1,4 @@
-﻿using SkipSmart.Application.Abstractions.Authentication;
+using SkipSmart.Application.Abstractions.Authentication;
 using SkipSmart.Application.Abstractions.Messaging;
 using SkipSmart.Application.Users.Shared;
 using SkipSmart.Domain.Abstractions;
@@ -24,7 +24,7 @@ internal sealed class LoginUserQueryHandler : IQueryHandler<LoginUserQuery, Acce
     }
     
     public async Task<Result<AccessTokenResponse>> Handle(LoginUserQuery request, CancellationToken cancellationToken) {
-        var user = await _userRepository.GetByEmailAsync(new Email(request.Email), cancellationToken);
+        var user = await _userRepository.GetByEmailAsync(request.Email, cancellationToken);
 
         if (user is null) {
             return Result.Failure<AccessTokenResponse>(UserErrors.InvalidCredentials);

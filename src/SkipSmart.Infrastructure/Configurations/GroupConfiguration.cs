@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SkipSmart.Domain.Groups;
 
@@ -12,8 +12,7 @@ internal sealed class GroupConfiguration : IEntityTypeConfiguration<Group> {
 
         builder.Property(group => group.GroupName)
             .IsRequired()
-            .HasMaxLength(100)
-            .HasConversion(groupName => groupName.Value, value => new GroupName(value));
+            .HasMaxLength(100);
 
         builder.Property(group => group.EdupageClassId)
             .IsRequired();
