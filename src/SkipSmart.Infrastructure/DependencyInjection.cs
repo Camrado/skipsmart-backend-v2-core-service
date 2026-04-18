@@ -10,7 +10,6 @@ using Microsoft.IdentityModel.Tokens;
 using SkipSmart.Application.Abstractions.Authentication;
 using SkipSmart.Application.Abstractions.Clock;
 using SkipSmart.Application.Abstractions.Data;
-using SkipSmart.Application.Abstractions.Email;
 using SkipSmart.Application.Abstractions.Timetable;
 using SkipSmart.Domain.Abstractions;
 using SkipSmart.Domain.Attendances;
@@ -22,7 +21,6 @@ using SkipSmart.Domain.Users;
 using SkipSmart.Infrastructure.Authentication;
 using SkipSmart.Infrastructure.Clock;
 using SkipSmart.Infrastructure.Data;
-using SkipSmart.Infrastructure.Email;
 using SkipSmart.Infrastructure.Repositories;
 using SkipSmart.Infrastructure.Timetable;
 
@@ -32,8 +30,6 @@ public static class DependencyInjection {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration) {
         services.AddTransient<IDateTimeProvider, DateTimeProvider>();
 
-        services.AddTransient<IEmailService, EmailService>();
-        
         AddPersistence(services);
         
         AddAuthentication(services, configuration);
@@ -98,7 +94,6 @@ public static class DependencyInjection {
         
         services.AddScoped<IUserContext, UserContext>();
 
-        services.AddTransient<IEmailVerificationService, EmailVerificationService>();
     }
 
     private static void AddAuthorization(IServiceCollection services) {

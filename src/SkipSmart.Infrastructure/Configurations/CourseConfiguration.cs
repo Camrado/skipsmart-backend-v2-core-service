@@ -13,8 +13,7 @@ internal sealed class CourseConfiguration : IEntityTypeConfiguration<Course> {
 
         builder.Property(course => course.CourseName)
             .HasMaxLength(300)
-            .IsRequired()
-            .HasConversion(courseName => courseName.Value, value => new CourseName(value));
+            .IsRequired();
 
         builder.Property(course => course.Semester)
             .IsRequired();

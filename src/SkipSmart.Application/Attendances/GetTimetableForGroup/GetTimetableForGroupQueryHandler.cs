@@ -45,13 +45,13 @@ internal sealed class GetTimetableForGroupQueryHandler : IQueryHandler<GetTimeta
         
         var formattedTimetable = new List<CourseTimetableForGroupResponse>();
         var myGroupCourses = await _courseRepository.GetAllByGroupIdAsync(_userContext.GroupId, cancellationToken);
-        var myGroupName = (await _groupRepository.GetByIdAsync(_userContext.GroupId, cancellationToken))?.GroupName.Value;
+        var myGroupName = (await _groupRepository.GetByIdAsync(_userContext.GroupId, cancellationToken))?.GroupName;
         var isTheUsersGroupL2 = myGroupName?.Contains("L2") ?? false;
 
         foreach (var lesson in timetableResult.Value) {
             var course = myGroupCourses.FirstOrDefault(c => {
                 var courseName = lesson.CourseName.Substring(6).ToLower();
-                return courseName.Contains(c.CourseName.Value.ToLower());
+                return courseName.Contains(c.CourseName.ToLower());
             });
             
             if (course is null) {

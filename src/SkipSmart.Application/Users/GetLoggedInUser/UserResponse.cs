@@ -1,4 +1,4 @@
-﻿namespace SkipSmart.Application.Users.GetLoggedInUser;
+namespace SkipSmart.Application.Users.GetLoggedInUser;
 
 public class UserResponse {
     public Guid Id { get; init; }
@@ -9,8 +9,6 @@ public class UserResponse {
 
     public string LastName { get; init; }
     
-    public bool IsEmailVerified { get; init; }
-    
     public int LanguageSubgroup { get; init; }
     
     public int FacultySubgroup { get; init; }
@@ -18,4 +16,4 @@ public class UserResponse {
     public string GroupName { get; init; }
     
     public Guid GroupId { get; init; }
-}
+}
