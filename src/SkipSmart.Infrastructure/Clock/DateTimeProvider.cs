@@ -9,7 +9,7 @@ internal sealed class DateTimeProvider : IDateTimeProvider {
         get {
             DateTime utcNow = DateTime.UtcNow;
 
-            TimeZoneInfo bakuTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Azerbaijan Standard Time");
+            TimeZoneInfo bakuTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Asia/Baku");
 
             DateTime bakuTime = TimeZoneInfo.ConvertTimeFromUtc(utcNow, bakuTimeZone);
 
@@ -23,7 +23,7 @@ internal sealed class DateTimeProvider : IDateTimeProvider {
         get {
             DateTime utcNow = DateTime.UtcNow;
 
-            TimeZoneInfo bakuTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Azerbaijan Standard Time");
+            TimeZoneInfo bakuTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Asia/Baku");
 
             DateTime bakuTime = TimeZoneInfo.ConvertTimeFromUtc(utcNow, bakuTimeZone);
 
