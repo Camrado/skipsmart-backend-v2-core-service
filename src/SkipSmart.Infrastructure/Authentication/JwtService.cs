@@ -30,6 +30,10 @@ internal sealed class JwtService : IJwtService {
             new("user_email", user.Email),
             new("group_id", user.GroupId.ToString())
         };
+
+        if (user.IsAdmin) {
+            claims.Add(new Claim(ClaimTypes.Role, "Admin"));
+        }
         
         var tokenDescriptor = new SecurityTokenDescriptor {
             Subject = new ClaimsIdentity(claims),

@@ -15,6 +15,8 @@ public class User : Entity {
      
      public Guid GroupId { get; private set; }
      
+     public bool IsAdmin { get; private set; }
+     
      private User(Guid id, string firstName, string lastName, string email, int languageSubgroup, int facultySubgroup, Password password, Guid groupId)
          : base(id) 
      {
@@ -25,6 +27,7 @@ public class User : Entity {
          FacultySubgroup = facultySubgroup;
          Password = password;
          GroupId = groupId;
+         IsAdmin = false;
      }
      
      private User() {

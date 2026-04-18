@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SkipSmart.Application.Groups.GetAllGroups;
@@ -22,5 +22,30 @@ public class GroupsController : ControllerBase {
         var result = await _sender.Send(query, cancellationToken);
         
         return Ok(result.Value);
+    }
+
+    [Authorize(Roles = "Admin")]
+    [HttpPost]
+    public async Task<IActionResult> CreateGroup([FromBody] SkipSmart.Application.Groups.CreateGroup.CreateGroupCommand request, CancellationToken cancellationToken) {
+        var result = await _sender.Send(request, cancellationToken);
+        if (result.IsFailure) return BadRequest(result.Error);
+        return Ok(result.Value);
+    }
+
+    [Authorize(Roles = "Admin")]
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> UpdateGroup(Guid id, [FromBody] SkipSmart.Application.Groups.UpdateGroup.UpdateGroupCommand request, CancellationToken cancellationToken) {
+        if (id != request.GroupId) return BadRequest("Id mismatch");
+        var result = await _sender.Send(request, cancellationToken);
+        if (result.IsFailure) return BadRequest(result.Error);
+        return Ok();
+    }
+
+    [Authorize(Roles = "Admin")]
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> DeleteGroup(Guid id, CancellationToken cancellationToken) {
+        var result = await _sender.Send(new SkipSmart.Application.Groups.DeleteGroup.DeleteGroupCommand(id), cancellationToken);
+        if (result.IsFailure) return BadRequest(result.Error);
+        return Ok();
     }
 }

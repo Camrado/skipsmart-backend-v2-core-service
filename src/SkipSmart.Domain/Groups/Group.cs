@@ -13,4 +13,9 @@ public class Group : Entity {
     
     private Group() {
     }
+
+    public void Update(string groupName, int edupageClassId) {
+        GroupName = groupName;
+        EdupageClassId = edupageClassId;
+    }
 }

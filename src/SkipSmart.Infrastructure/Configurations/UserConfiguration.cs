@@ -30,6 +30,10 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User> {
         builder.Property(user => user.FacultySubgroup)
             .IsRequired();
 
+        builder.Property(user => user.IsAdmin)
+            .IsRequired()
+            .HasDefaultValue(false);
+
         builder.OwnsOne(user => user.Password, passwordBuilder => {
             passwordBuilder.Property(password => password.HashedPassword)
                 .IsRequired();
