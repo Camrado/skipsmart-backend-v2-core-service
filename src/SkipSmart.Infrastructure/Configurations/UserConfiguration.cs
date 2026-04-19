@@ -46,6 +46,7 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User> {
 
         builder.HasOne<Group>()
             .WithMany()
-            .HasForeignKey(user => user.GroupId);
+            .HasForeignKey(user => user.GroupId)
+            .OnDelete(DeleteBehavior.SetNull);
     }
 }

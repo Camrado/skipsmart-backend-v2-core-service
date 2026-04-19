@@ -27,12 +27,15 @@ internal sealed class JwtService : IJwtService {
 
         var claims = new List<Claim> {
             new("user_id", user.Id.ToString()),
-            new("user_email", user.Email),
-            new("group_id", user.GroupId.ToString())
+            new("user_email", user.Email)
         };
 
+        if (user.GroupId.HasValue) {
+            claims.Add(new Claim("group_id", user.GroupId.Value.ToString()));
+        }
+
         if (user.IsAdmin) {
-            claims.Add(new Claim(ClaimTypes.Role, "Admin"));
+            claims.Add(new Claim(ClaimTypes.Role, Roles.Admin));
         }
         
         var tokenDescriptor = new SecurityTokenDescriptor {

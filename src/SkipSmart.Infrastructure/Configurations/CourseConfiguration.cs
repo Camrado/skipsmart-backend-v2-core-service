@@ -20,7 +20,8 @@ internal sealed class CourseConfiguration : IEntityTypeConfiguration<Course> {
 
         builder.HasOne<Group>()
             .WithMany()
-            .HasForeignKey(course => course.GroupId);
+            .HasForeignKey(course => course.GroupId)
+            .OnDelete(DeleteBehavior.Cascade);
             
         builder.Property(course => course.Hours)
             .HasColumnType("decimal(18,2)")

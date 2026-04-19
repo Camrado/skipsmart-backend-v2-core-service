@@ -15,5 +15,5 @@ public class UserResponse {
     
     public string GroupName { get; init; }
     
-    public Guid GroupId { get; init; }
+    public Guid? GroupId { get; init; }
 }

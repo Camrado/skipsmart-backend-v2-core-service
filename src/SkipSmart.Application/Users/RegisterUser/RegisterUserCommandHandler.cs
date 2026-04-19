@@ -3,12 +3,14 @@ using SkipSmart.Application.Abstractions.Messaging;
 using SkipSmart.Application.Exceptions;
 using SkipSmart.Application.Users.Shared;
 using SkipSmart.Domain.Abstractions;
+using SkipSmart.Domain.Groups;
 using SkipSmart.Domain.Users;
 
 namespace SkipSmart.Application.Users.RegisterUser;
 
 public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, AccessTokenResponse> {
     private readonly IUserRepository _userRepository;
+    private readonly IGroupRepository _groupRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IJwtService _jwtService;
     private readonly PasswordHasherService _passwordHasherService;
@@ -17,10 +19,12 @@ public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, A
     
     public RegisterUserCommandHandler(
         IUserRepository userRepository,
+        IGroupRepository groupRepository,
         IUnitOfWork unitOfWork,
         IJwtService jwtService,
         PasswordHasherService passwordHasherService) {
         _userRepository = userRepository;
+        _groupRepository = groupRepository;
         _unitOfWork = unitOfWork;
         _jwtService = jwtService;
         _passwordHasherService = passwordHasherService;
@@ -30,6 +34,11 @@ public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, A
     
     public async Task<Result<AccessTokenResponse>> Handle(RegisterUserCommand request, CancellationToken cancellationToken) {
         try {
+            var group = await _groupRepository.GetByIdAsync(request.GroupId, cancellationToken);
+            if (group is null) {
+                return Result.Failure<AccessTokenResponse>(GroupErrors.NotFound);
+            }
+
             var userSalt = _passwordHasherService.GenerateSalt();
             var hashedPassword = _passwordHasherService.ComputeHash(request.Password, userSalt, _pepper, _iterations);
             
