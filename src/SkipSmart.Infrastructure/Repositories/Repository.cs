@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SkipSmart.Domain.Abstractions;
 
 namespace SkipSmart.Infrastructure.Repositories;
@@ -16,5 +16,9 @@ public abstract class Repository<T> where T : Entity {
 
     public virtual void Add(T entity) {
         DbContext.Add(entity);
+    }
+
+    public virtual void Remove(T entity) {
+        DbContext.Remove(entity);
     }
 }

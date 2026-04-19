@@ -30,6 +30,10 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User> {
         builder.Property(user => user.FacultySubgroup)
             .IsRequired();
 
+        builder.Property(user => user.IsAdmin)
+            .IsRequired()
+            .HasDefaultValue(false);
+
         builder.OwnsOne(user => user.Password, passwordBuilder => {
             passwordBuilder.Property(password => password.HashedPassword)
                 .IsRequired();
@@ -42,6 +46,7 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User> {
 
         builder.HasOne<Group>()
             .WithMany()
-            .HasForeignKey(user => user.GroupId);
+            .HasForeignKey(user => user.GroupId)
+            .OnDelete(DeleteBehavior.SetNull);
     }
 }

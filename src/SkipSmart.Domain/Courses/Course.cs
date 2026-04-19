@@ -19,4 +19,11 @@ public class Course : Entity {
 
     private Course() {
     }
+
+    public void Update(string courseName, Semester semester, Guid groupId, decimal hours) {
+        CourseName = courseName;
+        Semester = semester;
+        GroupId = groupId;
+        Hours = hours;
+    }
 }

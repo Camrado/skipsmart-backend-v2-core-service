@@ -14,9 +14,13 @@ internal sealed class UserContext : IUserContext {
         .Claims.FirstOrDefault(c => c.Type == "user_id")?.Value 
                                      ?? throw new ApplicationException("User ID is unavailable"));
     
-    public Guid GroupId => Guid.Parse(_httpContextAccessor.HttpContext?.User
-                                          .Claims.FirstOrDefault(c => c.Type == "group_id")?.Value
-                                      ?? throw new ApplicationException("Group ID is unavailable"));
+    public Guid? GroupId {
+        get {
+            var groupIdString = _httpContextAccessor.HttpContext?.User.Claims.FirstOrDefault(c => c.Type == "group_id")?.Value;
+            if (string.IsNullOrEmpty(groupIdString)) return null;
+            return Guid.Parse(groupIdString);
+        }
+    }
     
     public string Email => _httpContextAccessor.HttpContext?.User
         .Claims.FirstOrDefault(c => c.Type == "user_email")?.Value 

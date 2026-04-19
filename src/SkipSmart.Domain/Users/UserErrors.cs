@@ -18,4 +18,8 @@ public static class UserErrors {
     public static Error EmailIsAlreadyTaken = new(
         "User.EmailIsAlreadyTaken",
         "The email is already taken");
+
+    public static Error NotAssignedToGroup = new(
+        "User.NotAssignedToGroup",
+        "The user is not assigned to any group");
 }

@@ -13,9 +13,11 @@ public class User : Entity {
      
      public int FacultySubgroup { get; private set; }
      
-     public Guid GroupId { get; private set; }
+     public Guid? GroupId { get; private set; }
      
-     private User(Guid id, string firstName, string lastName, string email, int languageSubgroup, int facultySubgroup, Password password, Guid groupId)
+     public bool IsAdmin { get; private set; }
+     
+     private User(Guid id, string firstName, string lastName, string email, int languageSubgroup, int facultySubgroup, Password password, Guid? groupId)
          : base(id) 
      {
          FirstName = firstName;
@@ -25,12 +27,13 @@ public class User : Entity {
          FacultySubgroup = facultySubgroup;
          Password = password;
          GroupId = groupId;
+         IsAdmin = false;
      }
      
      private User() {
      }
      
-     public static User Create(Guid userId, string firstName, string lastName, string email, int languageSubgroup, int facultySubgroup, Password password, Guid groupId) {
+     public static User Create(Guid userId, string firstName, string lastName, string email, int languageSubgroup, int facultySubgroup, Password password, Guid? groupId) {
          var user = new User(userId, firstName, lastName, email, languageSubgroup, facultySubgroup, password, groupId);
          
          user.RaiseDomainEvent(new UserCreatedDomainEvent(userId));
@@ -38,7 +41,7 @@ public class User : Entity {
          return user;
      }
      
-     public void ChangeGroup(Guid newGroupId) {
+     public void ChangeGroup(Guid? newGroupId) {
          GroupId = newGroupId;
      }
 

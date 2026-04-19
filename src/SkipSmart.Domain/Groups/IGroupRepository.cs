@@ -1,4 +1,4 @@
-﻿namespace SkipSmart.Domain.Groups;
+namespace SkipSmart.Domain.Groups;
 
 public interface IGroupRepository {
     Task<Group?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
@@ -6,4 +6,6 @@ public interface IGroupRepository {
     Task<Group?> GetByGroupNameAsync(string groupName, CancellationToken cancellationToken = default);
     
     void Add(Group group);
+    
+    void Remove(Group group);
 }

@@ -46,6 +46,9 @@ internal sealed class TimetableService : ITimetableService {
     {
         try {
             var group = await _groupRepository.GetByIdAsync(groupId, cancellationToken);
+            if (group is null) {
+                return Result.Failure<List<TimetableResponse>>(GroupErrors.NotFound);
+            }
             var edupageClassId = group.EdupageClassId;
             
             var queryParams = HttpUtility.ParseQueryString(string.Empty);
@@ -74,8 +77,13 @@ internal sealed class TimetableService : ITimetableService {
     public async Task<Result<IReadOnlyList<DateOnly>>> GetWorkingDaysForRange(Guid userId, DateOnly startDate, DateOnly endDate, CancellationToken cancellationToken = default) {
         try {
             var user = await _userRepository.GetByIdAsync(userId, cancellationToken);
-            var group = await _groupRepository.GetByIdAsync(user.GroupId, cancellationToken);
-            var courses = (await _courseRepository.GetAllByGroupIdAsync(user.GroupId, cancellationToken)).Select(c => c.CourseName);
+
+            if (user?.GroupId is null) {
+                return Result.Success<IReadOnlyList<DateOnly>>(new List<DateOnly>());
+            }
+
+            var group = await _groupRepository.GetByIdAsync(user.GroupId.Value, cancellationToken);
+            var courses = (await _courseRepository.GetAllByGroupIdAsync(user.GroupId.Value, cancellationToken)).Select(c => c.CourseName);
             
             string coursesParam = string.Join(";", courses);
 

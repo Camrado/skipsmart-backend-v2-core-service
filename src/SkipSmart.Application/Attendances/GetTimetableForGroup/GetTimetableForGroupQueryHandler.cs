@@ -30,8 +30,14 @@ internal sealed class GetTimetableForGroupQueryHandler : IQueryHandler<GetTimeta
     }
     
     public async Task<Result<IReadOnlyList<CourseTimetableForGroupResponse>>> Handle(GetTimetableForGroupQuery request, CancellationToken cancellationToken) {
+        if (_userContext.GroupId is null) {
+            return Result.Failure<IReadOnlyList<CourseTimetableForGroupResponse>>(UserErrors.NotAssignedToGroup);
+        }
+
+        var groupId = _userContext.GroupId.Value;
+
         var timetableResult = await _timetableService
-            .GetTimetableForDate(_userContext.GroupId, request.TimetableDate, cancellationToken);
+            .GetTimetableForDate(groupId, request.TimetableDate, cancellationToken);
 
         if (timetableResult.IsFailure) {
             return Result.Failure<IReadOnlyList<CourseTimetableForGroupResponse>>(timetableResult.Error);
@@ -44,8 +50,8 @@ internal sealed class GetTimetableForGroupQueryHandler : IQueryHandler<GetTimeta
         }
         
         var formattedTimetable = new List<CourseTimetableForGroupResponse>();
-        var myGroupCourses = await _courseRepository.GetAllByGroupIdAsync(_userContext.GroupId, cancellationToken);
-        var myGroupName = (await _groupRepository.GetByIdAsync(_userContext.GroupId, cancellationToken))?.GroupName;
+        var myGroupCourses = await _courseRepository.GetAllByGroupIdAsync(groupId, cancellationToken);
+        var myGroupName = (await _groupRepository.GetByIdAsync(groupId, cancellationToken))?.GroupName;
         var isTheUsersGroupL2 = myGroupName?.Contains("L2") ?? false;
 
         foreach (var lesson in timetableResult.Value) {
