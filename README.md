@@ -5,7 +5,7 @@
 **The robust backend engine powering the SkipSmart platform.**<br>
 Helping UFAZ University students seamlessly manage and track their absence limits.
 
-[![.NET 8](https://img.shields.io/badge/.NET-8.0-512BD4?style=for-the-badge&logo=dotnet)](https://dotnet.microsoft.com/)
+[![.NET 10](https://img.shields.io/badge/.NET-8.0-512BD4?style=for-the-badge&logo=dotnet)](https://dotnet.microsoft.com/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 [![Clean Architecture](https://img.shields.io/badge/Clean%20Architecture-2b2d38?style=for-the-badge&logo=gitkraken&logoColor=white)](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
 
@@ -35,7 +35,7 @@ This project strictly adheres to **Clean Architecture** principles, ensuring sep
 ## 🛠 Tech Stack
 
 ### Core Technologies
-- **Framework:** [.NET 8 Web API](https://dotnet.microsoft.com/)
+- **Framework:** [.NET 10 Web API](https://dotnet.microsoft.com/)
 - **Architecture:** Clean Architecture + CQRS Pattern
 - **Database:** [PostgreSQL](https://www.postgresql.org/)
 
@@ -65,7 +65,7 @@ Test/
 
 ### Prerequisites
 
-- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
+- [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
 - [PostgreSQL](https://www.postgresql.org/download/)
 - IDE (Visual Studio, Rider, or VS Code)
 
