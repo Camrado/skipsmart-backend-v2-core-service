@@ -5,7 +5,7 @@
 **The robust backend engine powering the SkipSmart platform.**<br>
 Helping UFAZ University students seamlessly manage and track their absence limits.
 
-[![.NET 10](https://img.shields.io/badge/.NET-8.0-512BD4?style=for-the-badge&logo=dotnet)](https://dotnet.microsoft.com/)
+[![.NET 10](https://img.shields.io/badge/.NET-10.0-512BD4?style=for-the-badge&logo=dotnet)](https://dotnet.microsoft.com/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 [![Clean Architecture](https://img.shields.io/badge/Clean%20Architecture-2b2d38?style=for-the-badge&logo=gitkraken&logoColor=white)](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
 
