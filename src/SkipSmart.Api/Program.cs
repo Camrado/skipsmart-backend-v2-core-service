@@ -27,7 +27,7 @@ builder.Services.AddCors(options => {
     options.AddPolicy("AllowSpecificOrigin", builder => {
         builder
             // .AllowAnyOrigin()
-            .WithOrigins("https://skipsmart.org", "https://skipsmart.netlify.app/", "http://localhost:8080")
+            .WithOrigins("https://skipsmart.org", "https://skipsmart.netlify.app/")
             .AllowAnyHeader()
             .AllowAnyMethod();
     });
