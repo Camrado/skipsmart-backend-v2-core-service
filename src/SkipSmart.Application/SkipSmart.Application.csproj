@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <ItemGroup>
+      <PackageReference Include="Dapper" />
+      <PackageReference Include="dotenv.net" />
+      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" />
+      <PackageReference Include="MediatR" />
+      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\SkipSmart.Domain\SkipSmart.Domain.csproj" />
+    </ItemGroup>
+
+</Project>

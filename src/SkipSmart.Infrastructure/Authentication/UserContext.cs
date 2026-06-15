@@ -1,0 +1,28 @@
+using Microsoft.AspNetCore.Http;
+using SkipSmart.Application.Abstractions.Authentication;
+
+namespace SkipSmart.Infrastructure.Authentication;
+
+internal sealed class UserContext : IUserContext {
+    private readonly IHttpContextAccessor _httpContextAccessor;
+    
+    public UserContext(IHttpContextAccessor httpContextAccessor) {
+        _httpContextAccessor = httpContextAccessor;
+    }
+
+    public Guid UserId => Guid.Parse(_httpContextAccessor.HttpContext?.User
+        .Claims.FirstOrDefault(c => c.Type == "user_id")?.Value 
+                                     ?? throw new ApplicationException("User ID is unavailable"));
+    
+    public Guid? GroupId {
+        get {
+            var groupIdString = _httpContextAccessor.HttpContext?.User.Claims.FirstOrDefault(c => c.Type == "group_id")?.Value;
+            if (string.IsNullOrEmpty(groupIdString)) return null;
+            return Guid.Parse(groupIdString);
+        }
+    }
+    
+    public string Email => _httpContextAccessor.HttpContext?.User
+        .Claims.FirstOrDefault(c => c.Type == "user_email")?.Value 
+                           ?? throw new ApplicationException("User email is unavailable");
+}
